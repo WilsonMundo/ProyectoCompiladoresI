@@ -6,19 +6,17 @@ class EvalVisitor(analizadorVisitor):
         self.variables = {}
 
     def visitPrograma(self, ctx):
-        """Valida y ejecuta todas las instrucciones del programa."""
         for child in ctx.getChildren():
             self.visit(child)
 
-    def visitForLoop(self, ctx):
-        """Ejecuta un ciclo for con validaciones."""
+    def visitCicloPara(self, ctx):
         self.visit(ctx.asignacion(0))  # Inicialización
     
         while True:
             resultado_condicion = self.visit(ctx.condicion())
     
             if resultado_condicion is None:
-                print("❌ Error: Condición inválida en el for.")
+                print("\u274c Error: Condición inválida en el ciclo para.")
                 return
     
             if not resultado_condicion:
@@ -27,170 +25,103 @@ class EvalVisitor(analizadorVisitor):
             self.visit(ctx.bloque())
             self.visit(ctx.asignacion(1))  # Incremento
 
-
-    def visitWhileLoop(self, ctx):
-        """Ejecuta un ciclo while con validaciones."""
+    def visitCicloMientras(self, ctx):
         while True:
             resultado_condicion = self.visit(ctx.condicion())
-
             if resultado_condicion is None:
-                print("❌ Error: Condición inválida en el while.")
+                print("\u274c Error: Condición inválida en el ciclo mientras.")
                 return
-
             if not resultado_condicion:
                 break
-
             self.visit(ctx.bloque())
 
-
-    def visitIfElse(self, ctx):
-        """Ejecuta y valida un if-else."""
+    def visitCondicional(self, ctx):
         resultado_condicion = self.visit(ctx.condicion())
-
         if resultado_condicion is None:
-            print("❌ Error: Condición inválida en el if.")
+            print("\u274c Error: Condición inválida en el condicional.")
             return
-
-        if resultado_condicion:  
+        if resultado_condicion:
             self.visit(ctx.bloque(0))
-        elif ctx.bloque(1) is not None:  
+        elif ctx.bloque(1) is not None:
             self.visit(ctx.bloque(1))
 
-
     def visitAccion(self, ctx):
-        """Ejecuta mostrar() con soporte para múltiples valores en una sola línea."""
         partes = []
-    
-        for child in ctx.getChildren():
-            text = child.getText()
-    
-            if text in ["mostrar", "(", ")", ","]:
-                continue  # Ignoramos tokens PRINT, paréntesis y comas
-            
-            if text.startswith('"') and text.endswith('"'):  # Si es una cadena (STRING)
-                partes.append(text[1:-1])  # Quitamos comillas
-            
-            elif text.isnumeric():  # Si es un número
-                partes.append(text)
-            
-            elif text.isidentifier():  # Si es una variable (ID)
-                if text in self.variables:
-                    partes.append(str(self.variables[text]))  # Convertimos a string el valor
+        for expr in ctx.getChildren():
+            if expr.getText() in ["mostrar", "(", ")", ","]:
+                continue  
+            if expr.getText().startswith('"') and expr.getText().endswith('"'):
+                partes.append(expr.getText()[1:-1])  
+            else:
+                valor = self.visit(expr)  
+                if valor is not None:
+                    partes.append(str(valor))
                 else:
-                    print(f"❌ Error: Variable '{text}' no definida.")
+                    print(f"\u274c Error: No se pudo evaluar '{expr.getText()}'")
                     return
-            
-            else:  # Si es una expresión, la evaluamos
-                partes.append(str(self.visit(child)))
-    
-        print(" ".join(partes))  # ✅ Imprimimos todo junto en una línea
+        print(" ".join(partes))
     
     def visitAsignacion(self, ctx):
-        """Valida y ejecuta asignaciones."""
-        var_name = ctx.ID().getText()
-        value = self.visit(ctx.expresion())
-
-        if value is None:
-            print(f"❌ Error: No se pudo asignar valor a '{var_name}'")
+        nombre_variable = ctx.ID().getText()
+        valor = self.visit(ctx.expresion())
+        if valor is None:
+            print(f"\u274c Error: No se pudo asignar valor a '{nombre_variable}'")
             return
+        self.variables[nombre_variable] = valor
+        return valor
 
-        self.variables[var_name] = value
-        return value
-
-    def visitSuma(self, ctx):
-        """Valida y ejecuta sumas."""
-        var_name = ctx.ID().getText()
-        left = self.visit(ctx.expresion(0))
-        right = self.visit(ctx.expresion(1))
-
-        if left is None or right is None:
-            print(f"❌ Error: Suma inválida en la variable '{var_name}'")
+    def visitOperacion(self, ctx):
+        nombre_variable = ctx.ID().getText()
+        izquierda = self.visit(ctx.expresion(0))
+        derecha = self.visit(ctx.expresion(1))
+        if izquierda is None or derecha is None:
+            print(f"\u274c Error: Operación inválida en la variable '{nombre_variable}'")
             return
-
-        self.variables[var_name] = left + right
-        return left + right
+        self.variables[nombre_variable] = izquierda + derecha
+        return izquierda + derecha
 
     def visitExpresion(self, ctx):
-        """Evalúa expresiones numéricas respetando la prioridad de operadores correctamente."""
-        if ctx.NUM():
-            return float(ctx.NUM().getText())
-
+        if ctx.NUMERO():
+            valor = ctx.NUMERO().getText()
+            return int(valor) if '.' not in valor else float(valor)
         elif ctx.ID():
-            var_name = ctx.ID().getText()
-            if var_name not in self.variables:
-                print(f"❌ Error: Variable '{var_name}' no definida.")
+            nombre_variable = ctx.ID().getText()
+            if nombre_variable not in self.variables:
+                print(f"\u274c Error: Variable '{nombre_variable}' no definida.")
                 return None
-            return self.variables[var_name]
-
-        elif ctx.getChildCount() == 3 and ctx.getChild(0).getText() == '(' and ctx.getChild(2).getText() == ')':
-            return self.visit(ctx.getChild(1))  #  Evalúa contenido dentro de paréntesis
-
+            return self.variables[nombre_variable]
         elif ctx.getChildCount() == 3:
-            left = self.visit(ctx.getChild(0))  # Evaluamos el operando izquierdo
-            op = ctx.getChild(1).getText()  # Obtenemos el operador
-            right = self.visit(ctx.getChild(2))  # Evaluamos el operando derecho
-
-            if left is None or right is None:
-                print(f"❌ Error: Expresión inválida '{ctx.getText()}'")
+            izquierda = self.visit(ctx.getChild(0))
+            operador = ctx.getChild(1).getText()
+            derecha = self.visit(ctx.getChild(2))
+            if izquierda is None or derecha is None:
+                print(f"\u274c Error: Expresión inválida '{ctx.getText()}'")
                 return None
-
-            #print(f"🧐 Evaluando: {left} {op} {right}")  # 👀 Depuración
-
-            # Evaluación según prioridad de operadores
-            if op == '*':
-                return left * right
-            elif op == '/':
-                if right == 0:
-                    print("⚠️ Advertencia: División por cero")
-                    return None
-                return left / right
-            elif op == '%':  
-                if right == 0:
-                    print("⚠️ Advertencia: Módulo por cero")
-                    return None
-                return left % right
-            elif op == '+':
-                return left + right
-            elif op == '-':
-                return left - right
-
-        elif ctx.getChildCount() == 1:
-            return self.visit(ctx.getChild(0))  # Si es un solo valor, devuélvelo directamente
-
-        print(f"❌ Error: Expresión inválida '{ctx.getText()}'")
+            return {
+                '*': lambda x, y: x * y,
+                '/': lambda x, y: x / y if y != 0 else None,
+                '%': lambda x, y: x % y if y != 0 else None,
+                '+': lambda x, y: x + y,
+                '-': lambda x, y: x - y
+            }.get(operador, lambda x, y: None)(izquierda, derecha)
         return None
-
-
-
-
+    
     def visitCondicion(self, ctx):
-       """Evalúa condiciones y devuelve un booleano."""
-       left = self.visit(ctx.expresion(0))
-       right = self.visit(ctx.expresion(1))
-       operador = ctx.getChild(1).getText()
-
-       if left is None or right is None:
-           print(f"❌ Error: Condición inválida '{ctx.getText()}'")
-           return None
-
-       if operador == '<':
-           return left < right
-       elif operador == '>':
-           return left > right
-       elif operador == '<=':
-           return left <= right
-       elif operador == '>=':
-           return left >= right
-       elif operador == '==':
-           return left == right
-       elif operador == '!=':
-           return left != right
-
-       print(f"❌ Error: Operador desconocido en condición '{ctx.getText()}'")
-       return None
-
-
+        izquierda = self.visit(ctx.expresion(0))
+        derecha = self.visit(ctx.expresion(1))
+        operador = ctx.getChild(1).getText()
+        if izquierda is None or derecha is None:
+            print(f"\u274c Error: Condición inválida '{ctx.getText()}'")
+            return None
+        return {
+            '<': lambda x, y: x < y,
+            '>': lambda x, y: x > y,
+            '<=': lambda x, y: x <= y,
+            '>=': lambda x, y: x >= y,
+            '==': lambda x, y: x == y,
+            '!=': lambda x, y: x != y
+        }.get(operador, lambda x, y: None)(izquierda, derecha)
+    
     def visitBloque(self, ctx):
-        """Ejecuta instrucciones dentro del bloque."""
-        for instr in ctx.getChildren():
-            self.visit(instr)
+        for instruccion in ctx.getChildren():
+            self.visit(instruccion)

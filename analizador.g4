@@ -1,61 +1,68 @@
 grammar analizador;
 
-// Tokens
-FOR      : 'for';
-WHILE    : 'while';
-IF       : 'if';
-ELSE     : 'else';
-PRINT    : 'mostrar';
-SEMICOL  : ';';
-LPAREN   : '(';
-RPAREN   : ')';
-LBRACE   : '{';
-RBRACE   : '}';
-ASSIGN   : '=';
-COMMA    : ',';
-MUL      : '*';
-DIV      : '/';
-MOD      : '%';   
-ADD      : '+';
-SUB      : '-';
-LT       : '<';
-GT       : '>';
-LEQ      : '<=';
-GEQ      : '>=';
-EQ       : '==';
-NEQ      : '!=';
-NUM      : [0-9]+;
-ID       : [a-zA-Z_][a-zA-Z0-9_]*;
-STRING   : '"' (~["])* '"';
-WS       : [ \t\r\n]+ -> skip;
-COMMENT  : '#' ~[\r\n]* -> skip ;
+// PALABRAS RESERVADAS
+PARA      : 'para';
+MIENTRAS  : 'mientras';
+SI        : 'si';
+SINO      : 'sino';
+MOSTRAR   : 'mostrar';
 
+// SÍMBOLOS
+PYC       : ';';
+PARI      : '(';
+PARD      : ')';
+LLAVEI    : '{';
+LLAVED    : '}';
+ASIGNAR   : '=';
+COMA      : ',';
 
+// OPERADORES
+MULT      : '*';
+DIV       : '/';
+MOD       : '%';   
+SUMA      : '+';
+RESTA     : '-';
+MENOR     : '<';
+MAYOR     : '>';
+MENORIGUAL : '<=';
+MAYORIGUAL : '>=';
+IGUAL     : '==';
+DIFERENTE : '!=';
 
-programa : (asignacion SEMICOL | suma SEMICOL | forLoop | whileLoop | ifElse | accion SEMICOL)*;
+// TIPOS DE DATO
+NUMERO    : [0-9]+;
+ID        : [a-zA-Z_][a-zA-Z0-9_]*;
+TEXTO     : '"' (~["])* '"';
 
-whileLoop : WHILE LPAREN condicion RPAREN LBRACE bloque RBRACE;
+// IGNORAR ESPACIOS Y COMENTARIOS
+ESPACIO   : [ \t\r\n]+ -> skip;
+COMENTARIO: '#' ~[\r\n]* -> skip;
 
-ifElse  : IF LPAREN condicion RPAREN LBRACE bloque RBRACE (ELSE LBRACE bloque RBRACE)?;
+// REGLAS DE PRODUCCIÓN
+programa  : (asignacion PYC | operacion PYC | cicloPara | cicloMientras | condicional | accion PYC)*;
 
-accion  : PRINT LPAREN (STRING | expresion) (COMMA (STRING | expresion))* RPAREN;
+cicloMientras : MIENTRAS PARI condicion PARD LLAVEI bloque LLAVED;
 
-forLoop  : FOR LPAREN asignacion SEMICOL condicion SEMICOL asignacion RPAREN LBRACE bloque RBRACE;
+condicional : SI PARI condicion PARD LLAVEI bloque LLAVED (SINO LLAVEI bloque LLAVED)?;
 
-asignacion : ID ASSIGN expresion;  
+accion : MOSTRAR PARI (TEXTO | expresion) (COMA (TEXTO | expresion))* PARD;
 
-condicion : expresion (LT | GT | LEQ | GEQ | EQ | NEQ) expresion;
+cicloPara : PARA PARI asignacion PYC condicion PYC asignacion PARD LLAVEI bloque LLAVED;
 
-suma : ID ASSIGN expresion ADD expresion;
+asignacion : ID ASIGNAR expresion;  
+
+condicion : expresion (MENOR | MAYOR | MENORIGUAL | MAYORIGUAL | IGUAL | DIFERENTE) expresion;
+
+operacion : ID ASIGNAR expresion SUMA expresion;
 
 expresion
-    : LPAREN expresion RPAREN
-    | expresion MUL expresion  
+    : PARI expresion PARD
+    | expresion MULT expresion  
     | expresion DIV expresion
     | expresion MOD expresion 
-    | expresion ADD expresion     
-    | expresion SUB expresion                     
+    | expresion SUMA expresion     
+    | expresion RESTA expresion                     
     | ID
-    | NUM;
+    | NUMERO;
 
-bloque : (asignacion SEMICOL | suma SEMICOL | forLoop | whileLoop | ifElse | accion SEMICOL)*;
+bloque : (asignacion PYC | operacion PYC | cicloPara | cicloMientras | condicional | accion PYC)*;

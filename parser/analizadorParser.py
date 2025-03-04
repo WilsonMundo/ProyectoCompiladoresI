@@ -72,60 +72,61 @@ class analizadorParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'for'", "'while'", "'if'", "'else'", 
+    literalNames = [ "<INVALID>", "'para'", "'mientras'", "'si'", "'sino'", 
                      "'mostrar'", "';'", "'('", "')'", "'{'", "'}'", "'='", 
                      "','", "'*'", "'/'", "'%'", "'+'", "'-'", "'<'", "'>'", 
                      "'<='", "'>='", "'=='", "'!='" ]
 
-    symbolicNames = [ "<INVALID>", "FOR", "WHILE", "IF", "ELSE", "PRINT", 
-                      "SEMICOL", "LPAREN", "RPAREN", "LBRACE", "RBRACE", 
-                      "ASSIGN", "COMMA", "MUL", "DIV", "MOD", "ADD", "SUB", 
-                      "LT", "GT", "LEQ", "GEQ", "EQ", "NEQ", "NUM", "ID", 
-                      "STRING", "WS", "COMMENT" ]
+    symbolicNames = [ "<INVALID>", "PARA", "MIENTRAS", "SI", "SINO", "MOSTRAR", 
+                      "PYC", "PARI", "PARD", "LLAVEI", "LLAVED", "ASIGNAR", 
+                      "COMA", "MULT", "DIV", "MOD", "SUMA", "RESTA", "MENOR", 
+                      "MAYOR", "MENORIGUAL", "MAYORIGUAL", "IGUAL", "DIFERENTE", 
+                      "NUMERO", "ID", "TEXTO", "ESPACIO", "COMENTARIO" ]
 
     RULE_programa = 0
-    RULE_whileLoop = 1
-    RULE_ifElse = 2
+    RULE_cicloMientras = 1
+    RULE_condicional = 2
     RULE_accion = 3
-    RULE_forLoop = 4
+    RULE_cicloPara = 4
     RULE_asignacion = 5
     RULE_condicion = 6
-    RULE_suma = 7
+    RULE_operacion = 7
     RULE_expresion = 8
     RULE_bloque = 9
 
-    ruleNames =  [ "programa", "whileLoop", "ifElse", "accion", "forLoop", 
-                   "asignacion", "condicion", "suma", "expresion", "bloque" ]
+    ruleNames =  [ "programa", "cicloMientras", "condicional", "accion", 
+                   "cicloPara", "asignacion", "condicion", "operacion", 
+                   "expresion", "bloque" ]
 
     EOF = Token.EOF
-    FOR=1
-    WHILE=2
-    IF=3
-    ELSE=4
-    PRINT=5
-    SEMICOL=6
-    LPAREN=7
-    RPAREN=8
-    LBRACE=9
-    RBRACE=10
-    ASSIGN=11
-    COMMA=12
-    MUL=13
+    PARA=1
+    MIENTRAS=2
+    SI=3
+    SINO=4
+    MOSTRAR=5
+    PYC=6
+    PARI=7
+    PARD=8
+    LLAVEI=9
+    LLAVED=10
+    ASIGNAR=11
+    COMA=12
+    MULT=13
     DIV=14
     MOD=15
-    ADD=16
-    SUB=17
-    LT=18
-    GT=19
-    LEQ=20
-    GEQ=21
-    EQ=22
-    NEQ=23
-    NUM=24
+    SUMA=16
+    RESTA=17
+    MENOR=18
+    MAYOR=19
+    MENORIGUAL=20
+    MAYORIGUAL=21
+    IGUAL=22
+    DIFERENTE=23
+    NUMERO=24
     ID=25
-    STRING=26
-    WS=27
-    COMMENT=28
+    TEXTO=26
+    ESPACIO=27
+    COMENTARIO=28
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -150,38 +151,38 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.AsignacionContext,i)
 
 
-        def SEMICOL(self, i:int=None):
+        def PYC(self, i:int=None):
             if i is None:
-                return self.getTokens(analizadorParser.SEMICOL)
+                return self.getTokens(analizadorParser.PYC)
             else:
-                return self.getToken(analizadorParser.SEMICOL, i)
+                return self.getToken(analizadorParser.PYC, i)
 
-        def suma(self, i:int=None):
+        def operacion(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.SumaContext)
+                return self.getTypedRuleContexts(analizadorParser.OperacionContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.SumaContext,i)
+                return self.getTypedRuleContext(analizadorParser.OperacionContext,i)
 
 
-        def forLoop(self, i:int=None):
+        def cicloPara(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.ForLoopContext)
+                return self.getTypedRuleContexts(analizadorParser.CicloParaContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.ForLoopContext,i)
+                return self.getTypedRuleContext(analizadorParser.CicloParaContext,i)
 
 
-        def whileLoop(self, i:int=None):
+        def cicloMientras(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.WhileLoopContext)
+                return self.getTypedRuleContexts(analizadorParser.CicloMientrasContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.WhileLoopContext,i)
+                return self.getTypedRuleContext(analizadorParser.CicloMientrasContext,i)
 
 
-        def ifElse(self, i:int=None):
+        def condicional(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.IfElseContext)
+                return self.getTypedRuleContexts(analizadorParser.CondicionalContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.IfElseContext,i)
+                return self.getTypedRuleContext(analizadorParser.CondicionalContext,i)
 
 
         def accion(self, i:int=None):
@@ -221,36 +222,36 @@ class analizadorParser ( Parser ):
                     self.state = 20
                     self.asignacion()
                     self.state = 21
-                    self.match(analizadorParser.SEMICOL)
+                    self.match(analizadorParser.PYC)
                     pass
 
                 elif la_ == 2:
                     self.state = 23
-                    self.suma()
+                    self.operacion()
                     self.state = 24
-                    self.match(analizadorParser.SEMICOL)
+                    self.match(analizadorParser.PYC)
                     pass
 
                 elif la_ == 3:
                     self.state = 26
-                    self.forLoop()
+                    self.cicloPara()
                     pass
 
                 elif la_ == 4:
                     self.state = 27
-                    self.whileLoop()
+                    self.cicloMientras()
                     pass
 
                 elif la_ == 5:
                     self.state = 28
-                    self.ifElse()
+                    self.condicional()
                     pass
 
                 elif la_ == 6:
                     self.state = 29
                     self.accion()
                     self.state = 30
-                    self.match(analizadorParser.SEMICOL)
+                    self.match(analizadorParser.PYC)
                     pass
 
 
@@ -267,68 +268,68 @@ class analizadorParser ( Parser ):
         return localctx
 
 
-    class WhileLoopContext(ParserRuleContext):
+    class CicloMientrasContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def WHILE(self):
-            return self.getToken(analizadorParser.WHILE, 0)
+        def MIENTRAS(self):
+            return self.getToken(analizadorParser.MIENTRAS, 0)
 
-        def LPAREN(self):
-            return self.getToken(analizadorParser.LPAREN, 0)
+        def PARI(self):
+            return self.getToken(analizadorParser.PARI, 0)
 
         def condicion(self):
             return self.getTypedRuleContext(analizadorParser.CondicionContext,0)
 
 
-        def RPAREN(self):
-            return self.getToken(analizadorParser.RPAREN, 0)
+        def PARD(self):
+            return self.getToken(analizadorParser.PARD, 0)
 
-        def LBRACE(self):
-            return self.getToken(analizadorParser.LBRACE, 0)
+        def LLAVEI(self):
+            return self.getToken(analizadorParser.LLAVEI, 0)
 
         def bloque(self):
             return self.getTypedRuleContext(analizadorParser.BloqueContext,0)
 
 
-        def RBRACE(self):
-            return self.getToken(analizadorParser.RBRACE, 0)
+        def LLAVED(self):
+            return self.getToken(analizadorParser.LLAVED, 0)
 
         def getRuleIndex(self):
-            return analizadorParser.RULE_whileLoop
+            return analizadorParser.RULE_cicloMientras
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitWhileLoop" ):
-                return visitor.visitWhileLoop(self)
+            if hasattr( visitor, "visitCicloMientras" ):
+                return visitor.visitCicloMientras(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def whileLoop(self):
+    def cicloMientras(self):
 
-        localctx = analizadorParser.WhileLoopContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_whileLoop)
+        localctx = analizadorParser.CicloMientrasContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_cicloMientras)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 37
-            self.match(analizadorParser.WHILE)
+            self.match(analizadorParser.MIENTRAS)
             self.state = 38
-            self.match(analizadorParser.LPAREN)
+            self.match(analizadorParser.PARI)
             self.state = 39
             self.condicion()
             self.state = 40
-            self.match(analizadorParser.RPAREN)
+            self.match(analizadorParser.PARD)
             self.state = 41
-            self.match(analizadorParser.LBRACE)
+            self.match(analizadorParser.LLAVEI)
             self.state = 42
             self.bloque()
             self.state = 43
-            self.match(analizadorParser.RBRACE)
+            self.match(analizadorParser.LLAVED)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -338,31 +339,31 @@ class analizadorParser ( Parser ):
         return localctx
 
 
-    class IfElseContext(ParserRuleContext):
+    class CondicionalContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def IF(self):
-            return self.getToken(analizadorParser.IF, 0)
+        def SI(self):
+            return self.getToken(analizadorParser.SI, 0)
 
-        def LPAREN(self):
-            return self.getToken(analizadorParser.LPAREN, 0)
+        def PARI(self):
+            return self.getToken(analizadorParser.PARI, 0)
 
         def condicion(self):
             return self.getTypedRuleContext(analizadorParser.CondicionContext,0)
 
 
-        def RPAREN(self):
-            return self.getToken(analizadorParser.RPAREN, 0)
+        def PARD(self):
+            return self.getToken(analizadorParser.PARD, 0)
 
-        def LBRACE(self, i:int=None):
+        def LLAVEI(self, i:int=None):
             if i is None:
-                return self.getTokens(analizadorParser.LBRACE)
+                return self.getTokens(analizadorParser.LLAVEI)
             else:
-                return self.getToken(analizadorParser.LBRACE, i)
+                return self.getToken(analizadorParser.LLAVEI, i)
 
         def bloque(self, i:int=None):
             if i is None:
@@ -371,60 +372,60 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.BloqueContext,i)
 
 
-        def RBRACE(self, i:int=None):
+        def LLAVED(self, i:int=None):
             if i is None:
-                return self.getTokens(analizadorParser.RBRACE)
+                return self.getTokens(analizadorParser.LLAVED)
             else:
-                return self.getToken(analizadorParser.RBRACE, i)
+                return self.getToken(analizadorParser.LLAVED, i)
 
-        def ELSE(self):
-            return self.getToken(analizadorParser.ELSE, 0)
+        def SINO(self):
+            return self.getToken(analizadorParser.SINO, 0)
 
         def getRuleIndex(self):
-            return analizadorParser.RULE_ifElse
+            return analizadorParser.RULE_condicional
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIfElse" ):
-                return visitor.visitIfElse(self)
+            if hasattr( visitor, "visitCondicional" ):
+                return visitor.visitCondicional(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def ifElse(self):
+    def condicional(self):
 
-        localctx = analizadorParser.IfElseContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_ifElse)
+        localctx = analizadorParser.CondicionalContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 4, self.RULE_condicional)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 45
-            self.match(analizadorParser.IF)
+            self.match(analizadorParser.SI)
             self.state = 46
-            self.match(analizadorParser.LPAREN)
+            self.match(analizadorParser.PARI)
             self.state = 47
             self.condicion()
             self.state = 48
-            self.match(analizadorParser.RPAREN)
+            self.match(analizadorParser.PARD)
             self.state = 49
-            self.match(analizadorParser.LBRACE)
+            self.match(analizadorParser.LLAVEI)
             self.state = 50
             self.bloque()
             self.state = 51
-            self.match(analizadorParser.RBRACE)
+            self.match(analizadorParser.LLAVED)
             self.state = 57
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==4:
                 self.state = 52
-                self.match(analizadorParser.ELSE)
+                self.match(analizadorParser.SINO)
                 self.state = 53
-                self.match(analizadorParser.LBRACE)
+                self.match(analizadorParser.LLAVEI)
                 self.state = 54
                 self.bloque()
                 self.state = 55
-                self.match(analizadorParser.RBRACE)
+                self.match(analizadorParser.LLAVED)
 
 
         except RecognitionException as re:
@@ -443,20 +444,20 @@ class analizadorParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def PRINT(self):
-            return self.getToken(analizadorParser.PRINT, 0)
+        def MOSTRAR(self):
+            return self.getToken(analizadorParser.MOSTRAR, 0)
 
-        def LPAREN(self):
-            return self.getToken(analizadorParser.LPAREN, 0)
+        def PARI(self):
+            return self.getToken(analizadorParser.PARI, 0)
 
-        def RPAREN(self):
-            return self.getToken(analizadorParser.RPAREN, 0)
+        def PARD(self):
+            return self.getToken(analizadorParser.PARD, 0)
 
-        def STRING(self, i:int=None):
+        def TEXTO(self, i:int=None):
             if i is None:
-                return self.getTokens(analizadorParser.STRING)
+                return self.getTokens(analizadorParser.TEXTO)
             else:
-                return self.getToken(analizadorParser.STRING, i)
+                return self.getToken(analizadorParser.TEXTO, i)
 
         def expresion(self, i:int=None):
             if i is None:
@@ -465,11 +466,11 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.ExpresionContext,i)
 
 
-        def COMMA(self, i:int=None):
+        def COMA(self, i:int=None):
             if i is None:
-                return self.getTokens(analizadorParser.COMMA)
+                return self.getTokens(analizadorParser.COMA)
             else:
-                return self.getToken(analizadorParser.COMMA, i)
+                return self.getToken(analizadorParser.COMA, i)
 
         def getRuleIndex(self):
             return analizadorParser.RULE_accion
@@ -491,15 +492,15 @@ class analizadorParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 59
-            self.match(analizadorParser.PRINT)
+            self.match(analizadorParser.MOSTRAR)
             self.state = 60
-            self.match(analizadorParser.LPAREN)
+            self.match(analizadorParser.PARI)
             self.state = 63
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [26]:
                 self.state = 61
-                self.match(analizadorParser.STRING)
+                self.match(analizadorParser.TEXTO)
                 pass
             elif token in [7, 24, 25]:
                 self.state = 62
@@ -513,13 +514,13 @@ class analizadorParser ( Parser ):
             _la = self._input.LA(1)
             while _la==12:
                 self.state = 65
-                self.match(analizadorParser.COMMA)
+                self.match(analizadorParser.COMA)
                 self.state = 68
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [26]:
                     self.state = 66
-                    self.match(analizadorParser.STRING)
+                    self.match(analizadorParser.TEXTO)
                     pass
                 elif token in [7, 24, 25]:
                     self.state = 67
@@ -533,7 +534,7 @@ class analizadorParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 75
-            self.match(analizadorParser.RPAREN)
+            self.match(analizadorParser.PARD)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -543,18 +544,18 @@ class analizadorParser ( Parser ):
         return localctx
 
 
-    class ForLoopContext(ParserRuleContext):
+    class CicloParaContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def FOR(self):
-            return self.getToken(analizadorParser.FOR, 0)
+        def PARA(self):
+            return self.getToken(analizadorParser.PARA, 0)
 
-        def LPAREN(self):
-            return self.getToken(analizadorParser.LPAREN, 0)
+        def PARI(self):
+            return self.getToken(analizadorParser.PARI, 0)
 
         def asignacion(self, i:int=None):
             if i is None:
@@ -563,69 +564,69 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.AsignacionContext,i)
 
 
-        def SEMICOL(self, i:int=None):
+        def PYC(self, i:int=None):
             if i is None:
-                return self.getTokens(analizadorParser.SEMICOL)
+                return self.getTokens(analizadorParser.PYC)
             else:
-                return self.getToken(analizadorParser.SEMICOL, i)
+                return self.getToken(analizadorParser.PYC, i)
 
         def condicion(self):
             return self.getTypedRuleContext(analizadorParser.CondicionContext,0)
 
 
-        def RPAREN(self):
-            return self.getToken(analizadorParser.RPAREN, 0)
+        def PARD(self):
+            return self.getToken(analizadorParser.PARD, 0)
 
-        def LBRACE(self):
-            return self.getToken(analizadorParser.LBRACE, 0)
+        def LLAVEI(self):
+            return self.getToken(analizadorParser.LLAVEI, 0)
 
         def bloque(self):
             return self.getTypedRuleContext(analizadorParser.BloqueContext,0)
 
 
-        def RBRACE(self):
-            return self.getToken(analizadorParser.RBRACE, 0)
+        def LLAVED(self):
+            return self.getToken(analizadorParser.LLAVED, 0)
 
         def getRuleIndex(self):
-            return analizadorParser.RULE_forLoop
+            return analizadorParser.RULE_cicloPara
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitForLoop" ):
-                return visitor.visitForLoop(self)
+            if hasattr( visitor, "visitCicloPara" ):
+                return visitor.visitCicloPara(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def forLoop(self):
+    def cicloPara(self):
 
-        localctx = analizadorParser.ForLoopContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_forLoop)
+        localctx = analizadorParser.CicloParaContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 8, self.RULE_cicloPara)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 77
-            self.match(analizadorParser.FOR)
+            self.match(analizadorParser.PARA)
             self.state = 78
-            self.match(analizadorParser.LPAREN)
+            self.match(analizadorParser.PARI)
             self.state = 79
             self.asignacion()
             self.state = 80
-            self.match(analizadorParser.SEMICOL)
+            self.match(analizadorParser.PYC)
             self.state = 81
             self.condicion()
             self.state = 82
-            self.match(analizadorParser.SEMICOL)
+            self.match(analizadorParser.PYC)
             self.state = 83
             self.asignacion()
             self.state = 84
-            self.match(analizadorParser.RPAREN)
+            self.match(analizadorParser.PARD)
             self.state = 85
-            self.match(analizadorParser.LBRACE)
+            self.match(analizadorParser.LLAVEI)
             self.state = 86
             self.bloque()
             self.state = 87
-            self.match(analizadorParser.RBRACE)
+            self.match(analizadorParser.LLAVED)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -645,8 +646,8 @@ class analizadorParser ( Parser ):
         def ID(self):
             return self.getToken(analizadorParser.ID, 0)
 
-        def ASSIGN(self):
-            return self.getToken(analizadorParser.ASSIGN, 0)
+        def ASIGNAR(self):
+            return self.getToken(analizadorParser.ASIGNAR, 0)
 
         def expresion(self):
             return self.getTypedRuleContext(analizadorParser.ExpresionContext,0)
@@ -673,7 +674,7 @@ class analizadorParser ( Parser ):
             self.state = 89
             self.match(analizadorParser.ID)
             self.state = 90
-            self.match(analizadorParser.ASSIGN)
+            self.match(analizadorParser.ASIGNAR)
             self.state = 91
             self.expresion(0)
         except RecognitionException as re:
@@ -699,23 +700,23 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.ExpresionContext,i)
 
 
-        def LT(self):
-            return self.getToken(analizadorParser.LT, 0)
+        def MENOR(self):
+            return self.getToken(analizadorParser.MENOR, 0)
 
-        def GT(self):
-            return self.getToken(analizadorParser.GT, 0)
+        def MAYOR(self):
+            return self.getToken(analizadorParser.MAYOR, 0)
 
-        def LEQ(self):
-            return self.getToken(analizadorParser.LEQ, 0)
+        def MENORIGUAL(self):
+            return self.getToken(analizadorParser.MENORIGUAL, 0)
 
-        def GEQ(self):
-            return self.getToken(analizadorParser.GEQ, 0)
+        def MAYORIGUAL(self):
+            return self.getToken(analizadorParser.MAYORIGUAL, 0)
 
-        def EQ(self):
-            return self.getToken(analizadorParser.EQ, 0)
+        def IGUAL(self):
+            return self.getToken(analizadorParser.IGUAL, 0)
 
-        def NEQ(self):
-            return self.getToken(analizadorParser.NEQ, 0)
+        def DIFERENTE(self):
+            return self.getToken(analizadorParser.DIFERENTE, 0)
 
         def getRuleIndex(self):
             return analizadorParser.RULE_condicion
@@ -756,7 +757,7 @@ class analizadorParser ( Parser ):
         return localctx
 
 
-    class SumaContext(ParserRuleContext):
+    class OperacionContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -766,8 +767,8 @@ class analizadorParser ( Parser ):
         def ID(self):
             return self.getToken(analizadorParser.ID, 0)
 
-        def ASSIGN(self):
-            return self.getToken(analizadorParser.ASSIGN, 0)
+        def ASIGNAR(self):
+            return self.getToken(analizadorParser.ASIGNAR, 0)
 
         def expresion(self, i:int=None):
             if i is None:
@@ -776,35 +777,35 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.ExpresionContext,i)
 
 
-        def ADD(self):
-            return self.getToken(analizadorParser.ADD, 0)
+        def SUMA(self):
+            return self.getToken(analizadorParser.SUMA, 0)
 
         def getRuleIndex(self):
-            return analizadorParser.RULE_suma
+            return analizadorParser.RULE_operacion
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSuma" ):
-                return visitor.visitSuma(self)
+            if hasattr( visitor, "visitOperacion" ):
+                return visitor.visitOperacion(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def suma(self):
+    def operacion(self):
 
-        localctx = analizadorParser.SumaContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_suma)
+        localctx = analizadorParser.OperacionContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 14, self.RULE_operacion)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 97
             self.match(analizadorParser.ID)
             self.state = 98
-            self.match(analizadorParser.ASSIGN)
+            self.match(analizadorParser.ASIGNAR)
             self.state = 99
             self.expresion(0)
             self.state = 100
-            self.match(analizadorParser.ADD)
+            self.match(analizadorParser.SUMA)
             self.state = 101
             self.expresion(0)
         except RecognitionException as re:
@@ -823,8 +824,8 @@ class analizadorParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def LPAREN(self):
-            return self.getToken(analizadorParser.LPAREN, 0)
+        def PARI(self):
+            return self.getToken(analizadorParser.PARI, 0)
 
         def expresion(self, i:int=None):
             if i is None:
@@ -833,17 +834,17 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.ExpresionContext,i)
 
 
-        def RPAREN(self):
-            return self.getToken(analizadorParser.RPAREN, 0)
+        def PARD(self):
+            return self.getToken(analizadorParser.PARD, 0)
 
         def ID(self):
             return self.getToken(analizadorParser.ID, 0)
 
-        def NUM(self):
-            return self.getToken(analizadorParser.NUM, 0)
+        def NUMERO(self):
+            return self.getToken(analizadorParser.NUMERO, 0)
 
-        def MUL(self):
-            return self.getToken(analizadorParser.MUL, 0)
+        def MULT(self):
+            return self.getToken(analizadorParser.MULT, 0)
 
         def DIV(self):
             return self.getToken(analizadorParser.DIV, 0)
@@ -851,11 +852,11 @@ class analizadorParser ( Parser ):
         def MOD(self):
             return self.getToken(analizadorParser.MOD, 0)
 
-        def ADD(self):
-            return self.getToken(analizadorParser.ADD, 0)
+        def SUMA(self):
+            return self.getToken(analizadorParser.SUMA, 0)
 
-        def SUB(self):
-            return self.getToken(analizadorParser.SUB, 0)
+        def RESTA(self):
+            return self.getToken(analizadorParser.RESTA, 0)
 
         def getRuleIndex(self):
             return analizadorParser.RULE_expresion
@@ -882,11 +883,11 @@ class analizadorParser ( Parser ):
             token = self._input.LA(1)
             if token in [7]:
                 self.state = 104
-                self.match(analizadorParser.LPAREN)
+                self.match(analizadorParser.PARI)
                 self.state = 105
                 self.expresion(0)
                 self.state = 106
-                self.match(analizadorParser.RPAREN)
+                self.match(analizadorParser.PARD)
                 pass
             elif token in [25]:
                 self.state = 108
@@ -894,7 +895,7 @@ class analizadorParser ( Parser ):
                 pass
             elif token in [24]:
                 self.state = 109
-                self.match(analizadorParser.NUM)
+                self.match(analizadorParser.NUMERO)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -919,7 +920,7 @@ class analizadorParser ( Parser ):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
                         self.state = 113
-                        self.match(analizadorParser.MUL)
+                        self.match(analizadorParser.MULT)
                         self.state = 114
                         self.expresion(8)
                         pass
@@ -958,7 +959,7 @@ class analizadorParser ( Parser ):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
                         self.state = 122
-                        self.match(analizadorParser.ADD)
+                        self.match(analizadorParser.SUMA)
                         self.state = 123
                         self.expresion(5)
                         pass
@@ -971,7 +972,7 @@ class analizadorParser ( Parser ):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
                         self.state = 125
-                        self.match(analizadorParser.SUB)
+                        self.match(analizadorParser.RESTA)
                         self.state = 126
                         self.expresion(4)
                         pass
@@ -1004,38 +1005,38 @@ class analizadorParser ( Parser ):
                 return self.getTypedRuleContext(analizadorParser.AsignacionContext,i)
 
 
-        def SEMICOL(self, i:int=None):
+        def PYC(self, i:int=None):
             if i is None:
-                return self.getTokens(analizadorParser.SEMICOL)
+                return self.getTokens(analizadorParser.PYC)
             else:
-                return self.getToken(analizadorParser.SEMICOL, i)
+                return self.getToken(analizadorParser.PYC, i)
 
-        def suma(self, i:int=None):
+        def operacion(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.SumaContext)
+                return self.getTypedRuleContexts(analizadorParser.OperacionContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.SumaContext,i)
+                return self.getTypedRuleContext(analizadorParser.OperacionContext,i)
 
 
-        def forLoop(self, i:int=None):
+        def cicloPara(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.ForLoopContext)
+                return self.getTypedRuleContexts(analizadorParser.CicloParaContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.ForLoopContext,i)
+                return self.getTypedRuleContext(analizadorParser.CicloParaContext,i)
 
 
-        def whileLoop(self, i:int=None):
+        def cicloMientras(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.WhileLoopContext)
+                return self.getTypedRuleContexts(analizadorParser.CicloMientrasContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.WhileLoopContext,i)
+                return self.getTypedRuleContext(analizadorParser.CicloMientrasContext,i)
 
 
-        def ifElse(self, i:int=None):
+        def condicional(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(analizadorParser.IfElseContext)
+                return self.getTypedRuleContexts(analizadorParser.CondicionalContext)
             else:
-                return self.getTypedRuleContext(analizadorParser.IfElseContext,i)
+                return self.getTypedRuleContext(analizadorParser.CondicionalContext,i)
 
 
         def accion(self, i:int=None):
@@ -1075,36 +1076,36 @@ class analizadorParser ( Parser ):
                     self.state = 132
                     self.asignacion()
                     self.state = 133
-                    self.match(analizadorParser.SEMICOL)
+                    self.match(analizadorParser.PYC)
                     pass
 
                 elif la_ == 2:
                     self.state = 135
-                    self.suma()
+                    self.operacion()
                     self.state = 136
-                    self.match(analizadorParser.SEMICOL)
+                    self.match(analizadorParser.PYC)
                     pass
 
                 elif la_ == 3:
                     self.state = 138
-                    self.forLoop()
+                    self.cicloPara()
                     pass
 
                 elif la_ == 4:
                     self.state = 139
-                    self.whileLoop()
+                    self.cicloMientras()
                     pass
 
                 elif la_ == 5:
                     self.state = 140
-                    self.ifElse()
+                    self.condicional()
                     pass
 
                 elif la_ == 6:
                     self.state = 141
                     self.accion()
                     self.state = 142
-                    self.match(analizadorParser.SEMICOL)
+                    self.match(analizadorParser.PYC)
                     pass
 
 

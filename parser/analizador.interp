@@ -1,9 +1,9 @@
 token literal names:
 null
-'for'
-'while'
-'if'
-'else'
+'para'
+'mientras'
+'si'
+'sino'
 'mostrar'
 ';'
 '('
@@ -31,44 +31,44 @@ null
 
 token symbolic names:
 null
-FOR
-WHILE
-IF
-ELSE
-PRINT
-SEMICOL
-LPAREN
-RPAREN
-LBRACE
-RBRACE
-ASSIGN
-COMMA
-MUL
+PARA
+MIENTRAS
+SI
+SINO
+MOSTRAR
+PYC
+PARI
+PARD
+LLAVEI
+LLAVED
+ASIGNAR
+COMA
+MULT
 DIV
 MOD
-ADD
-SUB
-LT
-GT
-LEQ
-GEQ
-EQ
-NEQ
-NUM
+SUMA
+RESTA
+MENOR
+MAYOR
+MENORIGUAL
+MAYORIGUAL
+IGUAL
+DIFERENTE
+NUMERO
 ID
-STRING
-WS
-COMMENT
+TEXTO
+ESPACIO
+COMENTARIO
 
 rule names:
 programa
-whileLoop
-ifElse
+cicloMientras
+condicional
 accion
-forLoop
+cicloPara
 asignacion
 condicion
-suma
+operacion
 expresion
 bloque
 

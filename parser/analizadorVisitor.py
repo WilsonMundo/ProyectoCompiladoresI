@@ -14,13 +14,13 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#whileLoop.
-    def visitWhileLoop(self, ctx:analizadorParser.WhileLoopContext):
+    # Visit a parse tree produced by analizadorParser#cicloMientras.
+    def visitCicloMientras(self, ctx:analizadorParser.CicloMientrasContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#ifElse.
-    def visitIfElse(self, ctx:analizadorParser.IfElseContext):
+    # Visit a parse tree produced by analizadorParser#condicional.
+    def visitCondicional(self, ctx:analizadorParser.CondicionalContext):
         return self.visitChildren(ctx)
 
 
@@ -29,8 +29,8 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#forLoop.
-    def visitForLoop(self, ctx:analizadorParser.ForLoopContext):
+    # Visit a parse tree produced by analizadorParser#cicloPara.
+    def visitCicloPara(self, ctx:analizadorParser.CicloParaContext):
         return self.visitChildren(ctx)
 
 
@@ -44,8 +44,8 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#suma.
-    def visitSuma(self, ctx:analizadorParser.SumaContext):
+    # Visit a parse tree produced by analizadorParser#operacion.
+    def visitOperacion(self, ctx:analizadorParser.OperacionContext):
         return self.visitChildren(ctx)
 
 
