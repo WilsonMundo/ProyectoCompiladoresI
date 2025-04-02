@@ -10,7 +10,6 @@ else:
 
 def serializedATN():
     return [
-
         4,0,35,222,6,-1,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,
         2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,
         13,7,13,2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,
@@ -89,14 +88,13 @@ def serializedATN():
         0,0,0,216,219,1,0,0,0,217,215,1,0,0,0,217,218,1,0,0,0,218,220,1,
         0,0,0,219,217,1,0,0,0,220,221,6,34,0,0,221,70,1,0,0,0,8,0,180,186,
         188,194,201,209,217,1,6,0,0
-
+    ]
 
 class analizadorLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
     decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
-
 
     FOR = 1
     WHILE = 2
@@ -134,13 +132,11 @@ class analizadorLexer(Lexer):
     WS = 34
     COMMENT = 35
 
-
     channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
 
     modeNames = [ "DEFAULT_MODE" ]
 
     literalNames = [ "<INVALID>",
-
             "'for'", "'while'", "'if'", "'else'", "'mostrar'", "'return'", 
             "'int'", "'float'", "'bool'", "'string'", "'true'", "'false'", 
             "';'", "'('", "')'", "'{'", "'}'", "'='", "','", "'*'", "'/'", 
@@ -158,19 +154,6 @@ class analizadorLexer(Lexer):
                   "LPAREN", "RPAREN", "LBRACE", "RBRACE", "ASSIGN", "COMMA", 
                   "MUL", "DIV", "MOD", "ADD", "SUB", "LT", "GT", "LEQ", 
                   "GEQ", "EQ", "NEQ", "NUM", "ID", "STRING", "WS", "COMMENT" ]
-
-
-    symbolicNames = [ "<INVALID>",
-            "PARA", "MIENTRAS", "SI", "SINO", "MOSTRAR", "PYC", "PARI", 
-            "PARD", "LLAVEI", "LLAVED", "ASIGNAR", "COMA", "MULT", "DIV", 
-            "MOD", "SUMA", "RESTA", "MENOR", "MAYOR", "MENORIGUAL", "MAYORIGUAL", 
-            "IGUAL", "DIFERENTE", "NUMERO", "ID", "TEXTO", "ESPACIO", "COMENTARIO" ]
-
-    ruleNames = [ "PARA", "MIENTRAS", "SI", "SINO", "MOSTRAR", "PYC", "PARI", 
-                  "PARD", "LLAVEI", "LLAVED", "ASIGNAR", "COMA", "MULT", 
-                  "DIV", "MOD", "SUMA", "RESTA", "MENOR", "MAYOR", "MENORIGUAL", 
-                  "MAYORIGUAL", "IGUAL", "DIFERENTE", "NUMERO", "ID", "TEXTO", 
-                  "ESPACIO", "COMENTARIO" ]
 
     grammarFileName = "analizador.g4"
 

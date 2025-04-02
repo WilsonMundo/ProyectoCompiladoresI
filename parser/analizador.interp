@@ -1,9 +1,9 @@
 token literal names:
 null
-'para'
-'mientras'
-'si'
-'sino'
+'for'
+'while'
+'if'
+'else'
 'mostrar'
 'return'
 'int'
@@ -58,9 +58,24 @@ RBRACE
 ASSIGN
 COMMA
 MUL
+DIV
+MOD
+ADD
+SUB
+LT
+GT
+LEQ
+GEQ
+EQ
+NEQ
+NUM
+ID
+STRING
+WS
+COMMENT
 
->
-
+rule names:
+programa
 instruccion
 declaracion
 tipo
@@ -76,7 +91,8 @@ argumentos
 forLoop
 whileLoop
 ifElse
-
+bloque
+expresion
 
 
 atn:

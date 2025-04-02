@@ -4,6 +4,7 @@ from parser.analizadorParser import analizadorParser
 from EvalVisitor import EvalVisitor
 from ValidaErrorListener import ValidaErrorListener
 from SemanticoListener import SemanticoListener 
+from IRVisitor import IRVisitor
 
 def leer_archivo(nombre_archivo):
     """Lee el contenido de un archivo y lo devuelve como una cadena."""
@@ -43,9 +44,14 @@ def analizar_codigo(codigo):
     if listener.hayErrores:
           print("⛔ Se detuvo la ejecución por errores de sintaxis.")
           return
-    visitor = EvalVisitor()
+    visitor = EvalVisitor()    
     visitor.visit(tree)
+    #genera Salida.ll
+    ir_gen = IRVisitor()
+    ir_gen.visit(tree)
 
+    with open("salida.ll", "w") as f:
+        f.write(str(ir_gen.module))
     # print("\nResultado de las variables:")
     # for var_name, value in visitor.variables.items():
     #     print(f"{var_name} = {value}")

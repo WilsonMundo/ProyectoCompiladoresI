@@ -1,0 +1,8 @@
+int sumar(int a, int b) {
+    return a + b;
+};
+
+MiPrograma {
+    int total = sumar(3, 4);
+    mostrar("Resultado:", total);
+}
