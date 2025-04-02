@@ -253,5 +253,5 @@ class EvalVisitor(analizadorVisitor):
                     return
                 scope[nombre]['valor'] = valor
                 return
-        print(f"❌ Error: Variable '{nombre}' no declarada.")
+        print(f"❌ Error: Variable '{nombre}' no declarada.")        
         self.hayErrores = True
