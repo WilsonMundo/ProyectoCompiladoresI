@@ -1,5 +1,6 @@
 from parser.analizadorVisitor import analizadorVisitor
 
+
 class EvalVisitor(analizadorVisitor):
     def __init__(self):
         self.scopes = [{}]  # Variables globales o locales
@@ -23,6 +24,7 @@ class EvalVisitor(analizadorVisitor):
             print(f"❌ Error de tipo: No se puede asignar '{valor}' al tipo '{tipo}'")
             self.hayErrores = True
             return
+
 
         self._insertar_variable(nombre, tipo, valor)
     def visitAsignacion(self, ctx):
@@ -93,7 +95,6 @@ class EvalVisitor(analizadorVisitor):
         print(" ".join(partes))
 
 
-
     def visitReturnStmt(self, ctx):
         self.retorno = self.visit(ctx.expresion())
 
@@ -162,6 +163,7 @@ class EvalVisitor(analizadorVisitor):
 
         return resultado
 
+
     def visitExpresion(self, ctx):
         if ctx.NUM():
             text = ctx.NUM().getText()
@@ -221,6 +223,7 @@ class EvalVisitor(analizadorVisitor):
             self.visit(instr)
         self.scopes.pop()
 
+
     def _verificar_tipo(self, tipo, valor):
         if tipo == "int": return isinstance(valor, int)
         elif tipo == "float": return isinstance(valor, float)
@@ -242,6 +245,7 @@ class EvalVisitor(analizadorVisitor):
         print(f"❌ Error: Variable '{nombre}' no declarada.")
         self.hayErrores = True
         return None
+
 
     def _asignar_variable(self, nombre, valor):
         for scope in reversed(self.scopes):
