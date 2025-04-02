@@ -1,6 +1,6 @@
 grammar analizador;
 
-// -------------------- TOKENS --------------------
+
 FOR      : 'for';
 WHILE    : 'while';
 IF       : 'if';
