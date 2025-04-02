@@ -42,10 +42,16 @@ Se ha implementado un **visitor** en Python usando `llvmlite`, que toma el árbo
 
 ✅ Uso del Analizador
 
-Ejecuta el comando
+Los archivos generados por ANTLR ya están incluidos en el repositorio dentro del directorio parser/, no es necesario correr el comando
+
+si se desea regenerarlos (analizador.g4), usar el comando:
+
+antlr4 -Dlanguage=Python3 -visitor -listener analizador.g4 -o parser
+
+Luego Ejecuta el comando
 
 python3 test.py 
-Ejecuta el codigo dentro del archivo codigo.txt
+Ejecuta el codigo dentro del archivo codigo.txt 
 
 existe archivos de ejemplo de codigo con para pruebas extencion .txt
 
@@ -54,15 +60,25 @@ existe archivos de ejemplo de codigo con para pruebas extencion .txt
 📂 Estructura del Proyecto
 
 ProyectoCompiladoresI/
+
 │── parser/                  # Archivos generados por ANTLR (incluidos en el repo)
+
 │── analizador.g4            # Archivo de gramática
+
 │── test.py                  # Archivo principal para ejecutar el analizador
+
 │── EvalVisitor.py           # Implementación de las validaciones y lecturas
+
 │── IRVisitor.py             # Generación de código intermedio en LLVM IR
+
 │── ValidaErrorListener.py   # Manejo de errores en el código fuente
+
 │── SemanticoListener.py     # Análisis semántico avanzado (tipos, funciones, ámbito)
+
 │── Pruebas.txt              # CodigoPruebas
+
 │── CodigoPrubeas.txt        # CodigoPruebas
+
 │── README.md                # Documentación del proyecto
 
 
