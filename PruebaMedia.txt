@@ -1,8 +1,8 @@
-
 int sumar(int a, int b) {
     int resultado = a + b;
     return resultado;
 };
+
 
 float dividir(float a, float b) {
     float resultado = a / b;
@@ -17,7 +17,6 @@ string saludar(string nombre) {
 bool esMayor(int edad) {
     bool resultado = edad >= 18;
     return resultado;
-    
 };
 
 MiPrograma {
@@ -29,7 +28,8 @@ MiPrograma {
     } else {
         mostrar("Adiós, hasta luego!");
     };
-
+    
+    
     int sumaTotal = 0;
     int i = 1;
     for (i = 1; i <= 5; i = i + 1) {
@@ -87,7 +87,7 @@ MiPrograma {
     if (menorEdad == false) {
         mostrar(nombre, " no es menor de edad.");
     };
-    
+
     bool comparacion = x > 5;
     if (comparacion) {
         mostrar("x es mayor que 5");
@@ -103,11 +103,10 @@ MiPrograma {
 
     string saludoPersonal = saludar(nombre);
     mostrar("Saludo personalizado:", saludoPersonal);
-    bool esAdulto = esMayor(20);
-    if (esAdulto) {
-        mostrar(nombre, " es adulto.");
-        
-    };
-    
-}
 
+    bool esAdulto = esMayor(20);
+    mostrar(esAdulto);
+    if (esAdulto)  {
+        mostrar(nombre, " es adulto.");
+    };
+}

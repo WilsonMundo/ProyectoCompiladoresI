@@ -55,10 +55,12 @@ class EvalVisitor(analizadorVisitor):
 
     def visitIfElse(self, ctx):
         condicion = self.visit(ctx.expresion())
-        if condicion:
+        #print(f"🧪 Condición del if: {condicion} (tipo: {type(condicion)})") pruebas
+        if isinstance(condicion, bool) and condicion is True:
             self.visit(ctx.bloque(0))
         elif ctx.bloque(1):
             self.visit(ctx.bloque(1))
+
 
     def visitWhileLoop(self, ctx):
         while True:
@@ -83,14 +85,16 @@ class EvalVisitor(analizadorVisitor):
                 continue
             valor = self.visit(child)
     
-            if valor is not None:
+            if valor is not None:                
                 partes.append(str(valor))
             else:
-                text = child.getText()
-                if text.startswith('"') and text.endswith('"'):
-                    text = text[1:-1]  # elimina comillas dobles
-                partes.append(text)
-    
+                if hasattr(child, 'getText'):
+                    raw = child.getText()
+                    if raw.startswith('"') and raw.endswith('"'):
+                        raw = raw[1:-1]
+                partes.append(raw)
+        #print(f"🧾 Acción: {partes}") debug
+        #print("🖨️ Mostrando:", " ".join(partes))  pruebas
         print(" ".join(partes))
 
     def visitReturnStmt(self, ctx):
@@ -146,21 +150,28 @@ class EvalVisitor(analizadorVisitor):
             if not self._verificar_tipo(tipo, valor):
                 print(f"❌ Error: Argumento inválido para parámetro '{id_param}' de tipo '{tipo}'")
                 self.hayErrores = True
-                self.variables = scope_anterior
+                self.scopes = scope_anterior
                 return None
             self._insertar_variable(id_param, tipo, valor)
 
-        self.retorno = None        
+        # ⛑️ Manejo seguro de retorno
+        prev_retorno = self.retorno
+        self.retorno = None
+
         self.visit(cuerpo)
         resultado = self.retorno
+
+        self.retorno = prev_retorno
         self.scopes = scope_anterior
 
+        # Validar tipo de retorno
         if not self._verificar_tipo(tipo_retorno, resultado):
             print(f"❌ Error: Valor retornado incompatible en '{nombre}', se esperaba '{tipo_retorno}'")
             self.hayErrores = True
             return None
 
         return resultado
+
 
     def visitExpresion(self, ctx):
         if ctx.NUM():
@@ -214,12 +225,18 @@ class EvalVisitor(analizadorVisitor):
         return None
 
     def visitBloque(self, ctx):
+        from antlr4.tree.Tree import TerminalNodeImpl  # asegúrate de tenerlo importado
+
         self.scopes.append({})
         for instr in ctx.getChildren():
-            if self.retorno is not None:
+            if isinstance(instr, TerminalNodeImpl):  # ← ignora ';' y otros tokens
+                continue
+            if self.retorno is not None:  # ← solo debería cortar si estamos en una función
                 break
             self.visit(instr)
         self.scopes.pop()
+
+
 
     def _verificar_tipo(self, tipo, valor):
         if tipo == "int": return isinstance(valor, int)
@@ -243,6 +260,12 @@ class EvalVisitor(analizadorVisitor):
         self.hayErrores = True
         return None
 
+    def _valor_default(self, tipo):
+        if tipo == "int": return 0
+        if tipo == "float": return 0.0
+        if tipo == "bool": return False
+        if tipo == "string": return ""
+        return None
 
 
     def _asignar_variable(self, nombre, valor):
