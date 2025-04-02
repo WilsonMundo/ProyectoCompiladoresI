@@ -104,9 +104,11 @@ argumentos
     : expresion (COMMA expresion)*
     ;
 
+
 forLoop 
     : FOR LPAREN asignacion SEMICOL expresion SEMICOL asignacion RPAREN LBRACE bloque RBRACE
     ;
+
 
 whileLoop 
     : WHILE LPAREN expresion RPAREN LBRACE bloque RBRACE
@@ -116,9 +118,11 @@ ifElse
     : IF LPAREN expresion RPAREN LBRACE bloque RBRACE (ELSE LBRACE bloque RBRACE)?
     ;
 
+
 bloque 
     : (instruccion SEMICOL)*
     ;
+
 
 expresion
     : LPAREN expresion RPAREN
