@@ -27,7 +27,8 @@ MiPrograma {
     } else {
         mostrar("Adiós, hasta luego!");
     };
-
+    
+    
     int sumaTotal = 0;
     int i = 1;
     for (i = 1; i <= 5; i = i + 1) {
@@ -103,7 +104,8 @@ MiPrograma {
     mostrar("Saludo personalizado:", saludoPersonal);
 
     bool esAdulto = esMayor(20);
-    if (esAdulto) {
+    mostrar(esAdulto);
+    if (esAdulto)  {
         mostrar(nombre, " es adulto.");
     };
 }

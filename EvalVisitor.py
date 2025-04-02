@@ -1,196 +1,257 @@
 from parser.analizadorVisitor import analizadorVisitor
 
 class EvalVisitor(analizadorVisitor):
-
     def __init__(self):
-        self.variables = {}
+        self.scopes = [{}]  # Variables globales o locales
+        self.funciones = {}  # Funciones definidas
+        self.hayErrores = False
+        self.retorno = None
 
     def visitPrograma(self, ctx):
-        """Valida y ejecuta todas las instrucciones del programa."""
         for child in ctx.getChildren():
+            if self.hayErrores:
+                print("⛔ Ejecución detenida por errores.")
+                break
             self.visit(child)
 
-    def visitForLoop(self, ctx):
-        """Ejecuta un ciclo for con validaciones."""
-        self.visit(ctx.asignacion(0))  # Inicialización
-    
-        while True:
-            resultado_condicion = self.visit(ctx.condicion())
-    
-            if resultado_condicion is None:
-                print("❌ Error: Condición inválida en el for.")
-                return
-    
-            if not resultado_condicion:
-                break
-            
-            self.visit(ctx.bloque())
-            self.visit(ctx.asignacion(1))  # Incremento
+    def visitDeclaracion(self, ctx):
+        tipo = ctx.tipo().getText()
+        nombre = ctx.ID().getText()
+        valor = self.visit(ctx.expresion()) if ctx.expresion() else None
 
-
-    def visitWhileLoop(self, ctx):
-        """Ejecuta un ciclo while con validaciones."""
-        while True:
-            resultado_condicion = self.visit(ctx.condicion())
-
-            if resultado_condicion is None:
-                print("❌ Error: Condición inválida en el while.")
-                return
-
-            if not resultado_condicion:
-                break
-
-            self.visit(ctx.bloque())
-
-
-    def visitIfElse(self, ctx):
-        """Ejecuta y valida un if-else."""
-        resultado_condicion = self.visit(ctx.condicion())
-
-        if resultado_condicion is None:
-            print("❌ Error: Condición inválida en el if.")
+        if valor is not None and not self._verificar_tipo(tipo, valor):
+            print(f"❌ Error de tipo: No se puede asignar '{valor}' al tipo '{tipo}'")
+            self.hayErrores = True
             return
 
-        if resultado_condicion:  
-            self.visit(ctx.bloque(0))
-        elif ctx.bloque(1) is not None:  
-            self.visit(ctx.bloque(1))
-
-
-    def visitAccion(self, ctx):
-        """Ejecuta mostrar() con soporte para múltiples valores en una sola línea."""
-        partes = []
-    
-        for child in ctx.getChildren():
-            text = child.getText()
-    
-            if text in ["mostrar", "(", ")", ","]:
-                continue  # Ignoramos tokens PRINT, paréntesis y comas
-            
-            if text.startswith('"') and text.endswith('"'):  # Si es una cadena (STRING)
-                partes.append(text[1:-1])  # Quitamos comillas
-            
-            elif text.isnumeric():  # Si es un número
-                partes.append(text)
-            
-            elif text.isidentifier():  # Si es una variable (ID)
-                if text in self.variables:
-                    partes.append(str(self.variables[text]))  # Convertimos a string el valor
-                else:
-                    print(f"❌ Error: Variable '{text}' no definida.")
-                    return
-            
-            else:  # Si es una expresión, la evaluamos
-                partes.append(str(self.visit(child)))
-    
-        print(" ".join(partes))  # ✅ Imprimimos todo junto en una línea
-    
+        self._insertar_variable(nombre, tipo, valor)
     def visitAsignacion(self, ctx):
-        """Valida y ejecuta asignaciones."""
-        var_name = ctx.ID().getText()
-        value = self.visit(ctx.expresion())
+        nombre = ctx.ID().getText()
+        valor = self.visit(ctx.expresion())
+        self._asignar_variable(nombre, valor)
+        return valor
 
-        if value is None:
-            print(f"❌ Error: No se pudo asignar valor a '{var_name}'")
-            return
-
-        self.variables[var_name] = value
-        return value
-
+       
     def visitSuma(self, ctx):
-        """Valida y ejecuta sumas."""
-        var_name = ctx.ID().getText()
+        nombre = ctx.ID().getText()
         left = self.visit(ctx.expresion(0))
         right = self.visit(ctx.expresion(1))
+        resultado = left + right
 
-        if left is None or right is None:
-            print(f"❌ Error: Suma inválida en la variable '{var_name}'")
+        var = self._buscar_variable(nombre)
+        if var is None:
             return
 
-        self.variables[var_name] = left + right
-        return left + right
+        tipo = var['tipo']
+        if not self._verificar_tipo(tipo, resultado):
+            print(f"❌ Error: Resultado incompatible con el tipo de '{nombre}'")
+            self.hayErrores = True
+            return
+
+        self._asignar_variable(nombre, resultado)
+        return resultado
+
+    
+    def visitIfElse(self, ctx):
+        condicion = self.visit(ctx.expresion())
+        if condicion:
+            self.visit(ctx.bloque(0))
+        elif ctx.bloque(1):
+            self.visit(ctx.bloque(1))
+
+    def visitWhileLoop(self, ctx):
+        while True:
+            condicion = self.visit(ctx.expresion())
+            if not condicion:
+                break
+            self.visit(ctx.bloque())
+
+    def visitForLoop(self, ctx):
+        self.visit(ctx.asignacion(0))
+        while True:
+            condicion = self.visit(ctx.expresion())
+            if not condicion:
+                break
+            self.visit(ctx.bloque())
+            self.visit(ctx.asignacion(1))
+
+    def visitAccion(self, ctx):
+        partes = []
+        for child in ctx.children:
+            if child.getText() in ["mostrar", "(", ")", ","]:
+                continue
+            valor = self.visit(child)
+    
+            if valor is not None:
+                partes.append(str(valor))
+            else:
+                text = child.getText()
+                if text.startswith('"') and text.endswith('"'):
+                    text = text[1:-1]  # elimina comillas dobles
+                partes.append(text)
+    
+        print(" ".join(partes))
+
+
+
+    def visitReturnStmt(self, ctx):
+        self.retorno = self.visit(ctx.expresion())
+
+    def visitFuncionDecl(self, ctx):
+        tipo = ctx.tipo().getText()
+        nombre = ctx.ID().getText()
+        if nombre in self.funciones:
+            print(f"❌ Error: Función '{nombre}' ya fue declarada.")
+            self.hayErrores = True
+            return
+
+        parametros = []
+        if ctx.parametros():
+            for p in ctx.parametros().parametro():
+                tipo_param = p.tipo().getText()
+                id_param = p.ID().getText()
+                parametros.append((tipo_param, id_param))
+
+        self.funciones[nombre] = {
+            'tipo': tipo,
+            'parametros': parametros,
+            'ctx': ctx.bloque()
+        }
+
+    def visitLlamadaFuncion(self, ctx):
+        nombre = ctx.ID().getText()
+        if nombre not in self.funciones:
+            print(f"❌ Error: Función '{nombre}' no está definida.")
+            self.hayErrores = True
+            return None
+
+        funcion = self.funciones[nombre]
+        parametros = funcion['parametros']
+        cuerpo = funcion['ctx']
+        tipo_retorno = funcion['tipo']
+
+        argumentos = []
+        if ctx.argumentos():
+            argumentos = [self.visit(e) for e in ctx.argumentos().expresion()]
+
+        if len(argumentos) != len(parametros):
+            print(f"❌ Error: Número de argumentos incorrecto en llamada a '{nombre}'")
+            self.hayErrores = True
+            return None
+
+        scope_anterior = self.scopes.copy()
+        self.scopes.append({})
+
+        for (tipo, id_param), valor in zip(parametros, argumentos):
+            if not self._verificar_tipo(tipo, valor):
+                print(f"❌ Error: Argumento inválido para parámetro '{id_param}' de tipo '{tipo}'")
+                self.hayErrores = True
+                self.variables = scope_anterior
+                return None
+            self._insertar_variable(id_param, tipo, valor)
+
+        self.retorno = None
+        self.visit(cuerpo)
+        resultado = self.retorno
+        self.scopes = scope_anterior
+
+        if not self._verificar_tipo(tipo_retorno, resultado):
+            print(f"❌ Error: Valor retornado incompatible en '{nombre}', se esperaba '{tipo_retorno}'")
+            self.hayErrores = True
+            return None
+
+        return resultado
 
     def visitExpresion(self, ctx):
-        """Evalúa expresiones numéricas respetando la prioridad de operadores correctamente."""
         if ctx.NUM():
-            return float(ctx.NUM().getText())
-
+            text = ctx.NUM().getText()
+            return float(text) if '.' in text else int(text)
+        elif ctx.STRING():
+            return ctx.STRING().getText()[1:-1]
+        elif ctx.TRUE():
+            return True
+        elif ctx.FALSE():
+            return False
+        elif ctx.llamadaFuncion():
+            return self.visit(ctx.llamadaFuncion())
         elif ctx.ID():
-            var_name = ctx.ID().getText()
-            if var_name not in self.variables:
-                print(f"❌ Error: Variable '{var_name}' no definida.")
-                return None
-            return self.variables[var_name]
-
-        elif ctx.getChildCount() == 3 and ctx.getChild(0).getText() == '(' and ctx.getChild(2).getText() == ')':
-            return self.visit(ctx.getChild(1))  #  Evalúa contenido dentro de paréntesis
-
+            nombre = ctx.ID().getText()
+            var = self._buscar_variable(nombre)
+            if var is not None:
+                return var['valor']
+            return None
         elif ctx.getChildCount() == 3:
-            left = self.visit(ctx.getChild(0))  # Evaluamos el operando izquierdo
-            op = ctx.getChild(1).getText()  # Obtenemos el operador
-            right = self.visit(ctx.getChild(2))  # Evaluamos el operando derecho
+            if ctx.getChild(0).getText() == '(' and ctx.getChild(2).getText() == ')':
+                return self.visit(ctx.getChild(1))
+            left = self.visit(ctx.getChild(0))
+            op = ctx.getChild(1).getText()
+            right = self.visit(ctx.getChild(2))
 
             if left is None or right is None:
-                print(f"❌ Error: Expresión inválida '{ctx.getText()}'")
                 return None
 
-            #print(f"🧐 Evaluando: {left} {op} {right}")  # 👀 Depuración
-
-            # Evaluación según prioridad de operadores
-            if op == '*':
-                return left * right
-            elif op == '/':
-                if right == 0:
-                    print("⚠️ Advertencia: División por cero")
-                    return None
-                return left / right
-            elif op == '%':  
-                if right == 0:
-                    print("⚠️ Advertencia: Módulo por cero")
-                    return None
-                return left % right
-            elif op == '+':
-                return left + right
-            elif op == '-':
-                return left - right
-
+            try:
+                if op == '+': return left + right
+                elif op == '-': return left - right
+                elif op == '*': return left * right
+                elif op == '/': return left / right if right != 0 else None
+                elif op == '%': return left % right if right != 0 else None
+                elif op == '<': return left < right
+                elif op == '>': return left > right
+                elif op == '<=': return left <= right
+                elif op == '>=': return left >= right
+                elif op == '==': return left == right
+                elif op == '!=': return left != right
+            except TypeError:
+                print(f"❌ Error de tipo: no se puede operar '{left}' y '{right}' con '{op}'")
+                self.hayErrores = True
+                return None
         elif ctx.getChildCount() == 1:
-            return self.visit(ctx.getChild(0))  # Si es un solo valor, devuélvelo directamente
+            return self.visit(ctx.getChild(0))
 
         print(f"❌ Error: Expresión inválida '{ctx.getText()}'")
+        self.hayErrores = True
         return None
 
-
-
-
-    def visitCondicion(self, ctx):
-       """Evalúa condiciones y devuelve un booleano."""
-       left = self.visit(ctx.expresion(0))
-       right = self.visit(ctx.expresion(1))
-       operador = ctx.getChild(1).getText()
-
-       if left is None or right is None:
-           print(f"❌ Error: Condición inválida '{ctx.getText()}'")
-           return None
-
-       if operador == '<':
-           return left < right
-       elif operador == '>':
-           return left > right
-       elif operador == '<=':
-           return left <= right
-       elif operador == '>=':
-           return left >= right
-       elif operador == '==':
-           return left == right
-       elif operador == '!=':
-           return left != right
-
-       print(f"❌ Error: Operador desconocido en condición '{ctx.getText()}'")
-       return None
-
-
     def visitBloque(self, ctx):
-        """Ejecuta instrucciones dentro del bloque."""
+        self.scopes.append({})
         for instr in ctx.getChildren():
+            if self.retorno is not None:
+                break
             self.visit(instr)
+        self.scopes.pop()
+
+    def _verificar_tipo(self, tipo, valor):
+        if tipo == "int": return isinstance(valor, int)
+        elif tipo == "float": return isinstance(valor, float)
+        elif tipo == "bool": return isinstance(valor, bool)
+        elif tipo == "string": return isinstance(valor, str)
+        return False
+    
+    def _insertar_variable(self, nombre, tipo, valor):
+        if nombre in self.scopes[-1]:
+            print(f"❌ Error: Variable '{nombre}' ya fue declarada en este bloque.")
+            self.hayErrores = True
+            return
+        self.scopes[-1][nombre] = {'tipo': tipo, 'valor': valor}
+    
+    def _buscar_variable(self, nombre):
+        for scope in reversed(self.scopes):
+            if nombre in scope:
+                return scope[nombre]
+        print(f"❌ Error: Variable '{nombre}' no declarada.")
+        self.hayErrores = True
+        return None
+
+    def _asignar_variable(self, nombre, valor):
+        for scope in reversed(self.scopes):
+            if nombre in scope:
+                tipo = scope[nombre]['tipo']
+                if not self._verificar_tipo(tipo, valor):
+                    print(f"❌ Error de tipo: No se puede asignar '{valor}' a '{nombre}' de tipo '{tipo}'")
+                    self.hayErrores = True
+                    return
+                scope[nombre]['valor'] = valor
+                return
+        print(f"❌ Error: Variable '{nombre}' no declarada.")
+        self.hayErrores = True
