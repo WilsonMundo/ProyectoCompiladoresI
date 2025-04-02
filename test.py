@@ -31,6 +31,7 @@ def analizar_codigo(codigo):
 
     
     semantic_listener = SemanticoListener()    
+    
     walker = ParseTreeWalker()
     walker.walk(semantic_listener, tree)
 

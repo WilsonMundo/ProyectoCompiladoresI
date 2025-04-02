@@ -74,15 +74,64 @@ class EvalVisitor(analizadorVisitor):
         self.variables[nombre_variable] = valor
         return valor
 
-    def visitOperacion(self, ctx):
-        nombre_variable = ctx.ID().getText()
-        izquierda = self.visit(ctx.expresion(0))
-        derecha = self.visit(ctx.expresion(1))
-        if izquierda is None or derecha is None:
-            print(f"\u274c Error: Operación inválida en la variable '{nombre_variable}'")
-            return
-        self.variables[nombre_variable] = izquierda + derecha
-        return izquierda + derecha
+
+        parametros = []
+        if ctx.parametros():
+            for p in ctx.parametros().parametro():
+                tipo_param = p.tipo().getText()
+                id_param = p.ID().getText()
+                parametros.append((tipo_param, id_param))
+
+        self.funciones[nombre] = {
+            'tipo': tipo,
+            'parametros': parametros,
+            'ctx': ctx.bloque()
+        }
+
+    def visitLlamadaFuncion(self, ctx):
+        nombre = ctx.ID().getText()
+        if nombre not in self.funciones:
+            print(f"❌ Error: Función '{nombre}' no está definida.")
+            self.hayErrores = True
+            return None
+
+        funcion = self.funciones[nombre]
+        parametros = funcion['parametros']
+        cuerpo = funcion['ctx']
+        tipo_retorno = funcion['tipo']
+
+        argumentos = []
+        if ctx.argumentos():
+            argumentos = [self.visit(e) for e in ctx.argumentos().expresion()]
+
+        if len(argumentos) != len(parametros):
+            print(f"❌ Error: Número de argumentos incorrecto en llamada a '{nombre}'")
+            self.hayErrores = True
+            return None
+
+        scope_anterior = self.scopes.copy()
+        self.scopes.append({})
+
+        for (tipo, id_param), valor in zip(parametros, argumentos):
+            if not self._verificar_tipo(tipo, valor):
+                print(f"❌ Error: Argumento inválido para parámetro '{id_param}' de tipo '{tipo}'")
+                self.hayErrores = True
+                self.variables = scope_anterior
+                return None
+            self._insertar_variable(id_param, tipo, valor)
+
+        self.retorno = None        
+        self.visit(cuerpo)
+        resultado = self.retorno
+        self.scopes = scope_anterior
+
+        if not self._verificar_tipo(tipo_retorno, resultado):
+            print(f"❌ Error: Valor retornado incompatible en '{nombre}', se esperaba '{tipo_retorno}'")
+            self.hayErrores = True
+            return None
+
+        return resultado
+
 
     def visitExpresion(self, ctx):
         if ctx.NUMERO():

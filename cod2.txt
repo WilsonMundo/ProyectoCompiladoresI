@@ -3,6 +3,7 @@ int sumar(int a, int b) {
     return resultado;
 };
 
+
 float dividir(float a, float b) {
     float resultado = a / b;
     return resultado;
