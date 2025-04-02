@@ -14,6 +14,7 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+
     # Visit a parse tree produced by analizadorParser#instruccion.
     def visitInstruccion(self, ctx:analizadorParser.InstruccionContext):
         return self.visitChildren(ctx)
@@ -36,6 +37,7 @@ class analizadorVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by analizadorParser#suma.
     def visitSuma(self, ctx:analizadorParser.SumaContext):
+
         return self.visitChildren(ctx)
 
 
@@ -44,9 +46,9 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+
     # Visit a parse tree produced by analizadorParser#returnStmt.
     def visitReturnStmt(self, ctx:analizadorParser.ReturnStmtContext):
-        return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by analizadorParser#funcionDecl.
@@ -59,8 +61,10 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+
     # Visit a parse tree produced by analizadorParser#parametro.
     def visitParametro(self, ctx:analizadorParser.ParametroContext):
+
         return self.visitChildren(ctx)
 
 
