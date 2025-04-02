@@ -25,6 +25,7 @@ MiPrograma {
         };
     };
 
+
     if (esPrimo == 1) {
         mostrar(n, "es un número primo.");
     } else {

@@ -16,6 +16,7 @@ string saludar(string nombre) {
 bool esMayor(int edad) {
     bool resultado = edad >= 18;
     return resultado;
+    
 };
 
 MiPrograma {

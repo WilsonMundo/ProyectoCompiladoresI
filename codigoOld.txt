@@ -8,6 +8,7 @@ int sumar(int a, int b) {
     return resultado;
 };
 
+
 int sumar(int a, int b) {  # ❌ Error: Función ya fue declarada
     return a + b;
 };
