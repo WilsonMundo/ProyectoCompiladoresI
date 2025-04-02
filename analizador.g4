@@ -1,5 +1,6 @@
 grammar analizador;
 
+
 FOR      : 'for';
 WHILE    : 'while';
 IF       : 'if';
@@ -144,3 +145,4 @@ expresion
     | FALSE
     | STRING
     ;
+
