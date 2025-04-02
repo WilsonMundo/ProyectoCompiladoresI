@@ -179,3 +179,17 @@ class EvalVisitor(analizadorVisitor):
         for instruccion in ctx.getChildren():
             self.visit(instruccion)
 
+
+    def _asignar_variable(self, nombre, valor):
+        for scope in reversed(self.scopes):
+            if nombre in scope:
+                tipo = scope[nombre]['tipo']
+                if not self._verificar_tipo(tipo, valor):
+                    print(f"❌ Error de tipo: No se puede asignar '{valor}' a '{nombre}' de tipo '{tipo}'")
+                    self.hayErrores = True
+                    return
+                scope[nombre]['valor'] = valor
+                return
+        print(f"❌ Error: Variable '{nombre}' no declarada.")        
+        self.hayErrores = True
+
