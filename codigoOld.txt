@@ -1,39 +1,17 @@
-x = 10;
-y = 20;
+int x = 10;
+int x = 20;  # ❌ Error: Variable redeclarada
 
-if (x < y) {
-    mostrar("Hola, bienvenido!");
-} else {
-    mostrar("Adiós, hasta luego!");
-}
+y = 5;       # ❌ Error: Variable no declarada
 
-sumaTotal = 0;
+int sumar(int a, int b) {
+    int resultado = a + b;
+    return resultado;
+};
 
-for (i = 1; i <= 5; i = i + 1) {
-    sumaTotal = sumaTotal + i;
-}
+int sumar(int a, int b) {  # ❌ Error: Función ya fue declarada
+    return a + b;
+};
 
-contador = 0;
-while (contador < 3) {
-    mostrar("Ciclo while en ejecución...");
-    contador = contador + 1;
-}
+int total = sumar(1);  # ❌ Error: Número incorrecto de argumentos
 
-num = 5;
-b = 10;
-c = 20;
-
-suma = num + b;
-resta = c - num;
-multiplicacion = num * b;
-division = c / num;
-
-if (c != b) {
-    mostrar("c es diferente de b");
-}
-
-if (b >= num) {
-    mostrar("b es mayor o igual que num");
-}
-
-resultadoFinal = (suma + resta) * (multiplicacion - division);
+int resultado = restar(4, 2);  # ❌ Error: Función no declarada

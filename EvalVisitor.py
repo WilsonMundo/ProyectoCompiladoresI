@@ -1,14 +1,18 @@
 from parser.analizadorVisitor import analizadorVisitor
 
 class EvalVisitor(analizadorVisitor):
-
     def __init__(self):
-        self.variables = {}
+        self.scopes = [{}]  # Variables globales o locales
+        self.funciones = {}  # Funciones definidas
+        self.hayErrores = False
+        self.retorno = None
 
     def visitPrograma(self, ctx):
         for child in ctx.getChildren():
+            if self.hayErrores:
+                print("⛔ Ejecución detenida por errores.")
+                break
             self.visit(child)
-
     def visitCicloPara(self, ctx):
         self.visit(ctx.asignacion(0))  # Inicialización
     
@@ -125,3 +129,4 @@ class EvalVisitor(analizadorVisitor):
     def visitBloque(self, ctx):
         for instruccion in ctx.getChildren():
             self.visit(instruccion)
+

@@ -14,23 +14,19 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#cicloMientras.
-    def visitCicloMientras(self, ctx:analizadorParser.CicloMientrasContext):
+
+    # Visit a parse tree produced by analizadorParser#instruccion.
+    def visitInstruccion(self, ctx:analizadorParser.InstruccionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#condicional.
-    def visitCondicional(self, ctx:analizadorParser.CondicionalContext):
+    # Visit a parse tree produced by analizadorParser#declaracion.
+    def visitDeclaracion(self, ctx:analizadorParser.DeclaracionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#accion.
-    def visitAccion(self, ctx:analizadorParser.AccionContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by analizadorParser#cicloPara.
-    def visitCicloPara(self, ctx:analizadorParser.CicloParaContext):
+    # Visit a parse tree produced by analizadorParser#tipo.
+    def visitTipo(self, ctx:analizadorParser.TipoContext):
         return self.visitChildren(ctx)
 
 
@@ -39,23 +35,71 @@ class analizadorVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#condicion.
-    def visitCondicion(self, ctx:analizadorParser.CondicionContext):
+    # Visit a parse tree produced by analizadorParser#suma.
+    def visitSuma(self, ctx:analizadorParser.SumaContext):
+
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#operacion.
-    def visitOperacion(self, ctx:analizadorParser.OperacionContext):
+    # Visit a parse tree produced by analizadorParser#accion.
+    def visitAccion(self, ctx:analizadorParser.AccionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by analizadorParser#expresion.
-    def visitExpresion(self, ctx:analizadorParser.ExpresionContext):
+
+    # Visit a parse tree produced by analizadorParser#returnStmt.
+    def visitReturnStmt(self, ctx:analizadorParser.ReturnStmtContext):
+
+
+    # Visit a parse tree produced by analizadorParser#funcionDecl.
+    def visitFuncionDecl(self, ctx:analizadorParser.FuncionDeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by analizadorParser#parametros.
+    def visitParametros(self, ctx:analizadorParser.ParametrosContext):
+        return self.visitChildren(ctx)
+
+
+
+    # Visit a parse tree produced by analizadorParser#parametro.
+    def visitParametro(self, ctx:analizadorParser.ParametroContext):
+
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by analizadorParser#llamadaFuncion.
+    def visitLlamadaFuncion(self, ctx:analizadorParser.LlamadaFuncionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by analizadorParser#argumentos.
+    def visitArgumentos(self, ctx:analizadorParser.ArgumentosContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by analizadorParser#forLoop.
+    def visitForLoop(self, ctx:analizadorParser.ForLoopContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by analizadorParser#whileLoop.
+    def visitWhileLoop(self, ctx:analizadorParser.WhileLoopContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by analizadorParser#ifElse.
+    def visitIfElse(self, ctx:analizadorParser.IfElseContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by analizadorParser#bloque.
     def visitBloque(self, ctx:analizadorParser.BloqueContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by analizadorParser#expresion.
+    def visitExpresion(self, ctx:analizadorParser.ExpresionContext):
         return self.visitChildren(ctx)
 
 

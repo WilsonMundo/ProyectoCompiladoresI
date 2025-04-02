@@ -66,3 +66,4 @@ expresion
     | NUMERO;
 
 bloque : (asignacion PYC | operacion PYC | cicloPara | cicloMientras | condicional | accion PYC)*;
+>>>>>>> main
