@@ -26,6 +26,20 @@ analizador.g4 → Archivo de gramática.
 
 -o parser → Genera los archivos en la carpeta parser/.
 
+
+## 🖥️ Generación de Código Intermedio (LLVM IR)
+El proyecto ahora incluye la capacidad de **generar código intermedio en LLVM IR**. 
+
+Se ha implementado un **visitor** en Python usando `llvmlite`, que toma el árbol sintáctico (AST) generado por ANTLR y lo traduce a **código intermedio LLVM IR**.
+
+### 🚀 ¿Cómo funciona?
+
+1. El código fuente es analizado utilizando ANTLR y el visitor `EvalVisitor`, que realiza las validaciones semánticas y de ejecución.
+2. Luego, el código es procesado por un **nuevo visitor** que genera el código intermedio LLVM IR.
+3. El código LLVM IR es generado y puede ser utilizado para optimizar o compilar más adelante a código máquina.
+
+
+
 ✅ Uso del Analizador
 
 Ejecuta el comando
@@ -35,13 +49,20 @@ Ejecuta el codigo dentro del archivo codigo.txt
 
 existe archivos de ejemplo de codigo con para pruebas extencion .txt
 
+
+
 📂 Estructura del Proyecto
 
 ProyectoCompiladoresI/
-│── parser/                 # Archivos generados por ANTLR (incluidos en el repo)
-│── analizador.g4           # Archivo de gramática
-│── test.py                 # Archivo principal para ejecutar el analizador
-│── EvalVisitor.py          # Validaciones y lecturas del archivo Eval  estructura del lenguaje
-│── README.md               # Documentación del proyecto
+│── parser/                  # Archivos generados por ANTLR (incluidos en el repo)
+│── analizador.g4            # Archivo de gramática
+│── test.py                  # Archivo principal para ejecutar el analizador
+│── EvalVisitor.py           # Implementación de las validaciones y lecturas
+│── IRVisitor.py             # Generación de código intermedio en LLVM IR
+│── ValidaErrorListener.py   # Manejo de errores en el código fuente
+│── SemanticoListener.py     # Análisis semántico avanzado (tipos, funciones, ámbito)
+│── Pruebas.txt              # CodigoPruebas
+│── CodigoPrubeas.txt        # CodigoPruebas
+│── README.md                # Documentación del proyecto
 
 
