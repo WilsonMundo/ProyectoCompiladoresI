@@ -1,12 +1,12 @@
 from parser.analizadorVisitor import analizadorVisitor
 
-
 class EvalVisitor(analizadorVisitor):
     def __init__(self):
         self.scopes = [{}]  # Variables globales o locales
         self.funciones = {}  # Funciones definidas
         self.hayErrores = False
         self.retorno = None
+
 
     def visitPrograma(self, ctx):
         for child in ctx.getChildren():
@@ -25,14 +25,12 @@ class EvalVisitor(analizadorVisitor):
             self.hayErrores = True
             return
 
-
         self._insertar_variable(nombre, tipo, valor)
     def visitAsignacion(self, ctx):
         nombre = ctx.ID().getText()
         valor = self.visit(ctx.expresion())
         self._asignar_variable(nombre, valor)
         return valor
-
        
     def visitSuma(self, ctx):
         nombre = ctx.ID().getText()
@@ -53,7 +51,7 @@ class EvalVisitor(analizadorVisitor):
         self._asignar_variable(nombre, resultado)
         return resultado
 
-    
+
     def visitIfElse(self, ctx):
         condicion = self.visit(ctx.expresion())
         if condicion:
@@ -94,7 +92,6 @@ class EvalVisitor(analizadorVisitor):
     
         print(" ".join(partes))
 
-
     def visitReturnStmt(self, ctx):
         self.retorno = self.visit(ctx.expresion())
 
@@ -105,6 +102,7 @@ class EvalVisitor(analizadorVisitor):
             print(f"❌ Error: Función '{nombre}' ya fue declarada.")
             self.hayErrores = True
             return
+
 
         parametros = []
         if ctx.parametros():
@@ -162,7 +160,6 @@ class EvalVisitor(analizadorVisitor):
             return None
 
         return resultado
-
 
     def visitExpresion(self, ctx):
         if ctx.NUM():
@@ -223,7 +220,6 @@ class EvalVisitor(analizadorVisitor):
             self.visit(instr)
         self.scopes.pop()
 
-
     def _verificar_tipo(self, tipo, valor):
         if tipo == "int": return isinstance(valor, int)
         elif tipo == "float": return isinstance(valor, float)
@@ -245,6 +241,7 @@ class EvalVisitor(analizadorVisitor):
         print(f"❌ Error: Variable '{nombre}' no declarada.")
         self.hayErrores = True
         return None
+
 
 
     def _asignar_variable(self, nombre, valor):
