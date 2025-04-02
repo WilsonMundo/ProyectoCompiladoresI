@@ -1,143 +1,69 @@
 grammar analizador;
 
-// -------------------- TOKENS --------------------
-FOR      : 'for';
-WHILE    : 'while';
-IF       : 'if';
-ELSE     : 'else';
-PRINT    : 'mostrar';
-RETURN   : 'return';
+// PALABRAS RESERVADAS
+PARA      : 'para';
+MIENTRAS  : 'mientras';
+SI        : 'si';
+SINO      : 'sino';
+MOSTRAR   : 'mostrar';
 
-INT      : 'int';
-FLOAT    : 'float';
-BOOL     : 'bool';
-STRING_T : 'string';
+// SÍMBOLOS
+PYC       : ';';
+PARI      : '(';
+PARD      : ')';
+LLAVEI    : '{';
+LLAVED    : '}';
+ASIGNAR   : '=';
+COMA      : ',';
 
-TRUE     : 'true';
-FALSE    : 'false';
+// OPERADORES
+MULT      : '*';
+DIV       : '/';
+MOD       : '%';   
+SUMA      : '+';
+RESTA     : '-';
+MENOR     : '<';
+MAYOR     : '>';
+MENORIGUAL : '<=';
+MAYORIGUAL : '>=';
+IGUAL     : '==';
+DIFERENTE : '!=';
 
-SEMICOL  : ';';
-LPAREN   : '(';
-RPAREN   : ')';
-LBRACE   : '{';
-RBRACE   : '}';
-ASSIGN   : '=';
-COMMA    : ',';
+// TIPOS DE DATO
+NUMERO    : [0-9]+;
+ID        : [a-zA-Z_][a-zA-Z0-9_]*;
+TEXTO     : '"' (~["])* '"';
 
-MUL      : '*';
-DIV      : '/';
-MOD      : '%';   
-ADD      : '+';
-SUB      : '-';
-LT       : '<';
-GT       : '>';
-LEQ      : '<=';
-GEQ      : '>=';
-EQ       : '==';
-NEQ      : '!=';
+// IGNORAR ESPACIOS Y COMENTARIOS
+ESPACIO   : [ \t\r\n]+ -> skip;
+COMENTARIO: '#' ~[\r\n]* -> skip;
 
-NUM      : [0-9]+ ('.' [0-9]+)?;
-ID       : [a-zA-Z_][a-zA-Z0-9_]*;
-STRING   : '"' (~["\r\n])* '"';
+// REGLAS DE PRODUCCIÓN
+programa  : (asignacion PYC | operacion PYC | cicloPara | cicloMientras | condicional | accion PYC)*;
 
-WS       : [ \t\r\n]+ -> skip;
-COMMENT  : '#' ~[\r\n]* -> skip ;
+cicloMientras : MIENTRAS PARI condicion PARD LLAVEI bloque LLAVED;
 
-// -------------------- REGLAS --------------------
+condicional : SI PARI condicion PARD LLAVEI bloque LLAVED (SINO LLAVEI bloque LLAVED)?;
 
-programa 
-    : (funcionDecl SEMICOL)* ID LBRACE (instruccion SEMICOL)* RBRACE EOF
-    ;
+accion : MOSTRAR PARI (TEXTO | expresion) (COMA (TEXTO | expresion))* PARD;
 
-instruccion 
-    : declaracion
-    | asignacion
-    | suma
-    | accion
-    | returnStmt
-    | forLoop
-    | whileLoop
-    | ifElse
-    | funcionDecl
-    ;
+cicloPara : PARA PARI asignacion PYC condicion PYC asignacion PARD LLAVEI bloque LLAVED;
 
-declaracion 
-    : tipo ID (ASSIGN expresion)?
-    ;
+asignacion : ID ASIGNAR expresion;  
 
-tipo 
-    : INT | FLOAT | BOOL | STRING_T
-    ;
+condicion : expresion (MENOR | MAYOR | MENORIGUAL | MAYORIGUAL | IGUAL | DIFERENTE) expresion;
 
-asignacion 
-    : ID ASSIGN expresion
-    ;
-
-suma 
-    : ID ASSIGN expresion ADD expresion
-    ;
-
-accion 
-    : PRINT LPAREN (STRING | expresion) (COMMA (STRING | expresion))* RPAREN
-    ;
-
-returnStmt 
-    : RETURN expresion
-    ;
-
-funcionDecl 
-    : tipo ID LPAREN parametros? RPAREN LBRACE bloque RBRACE
-    ;
-
-parametros 
-    : parametro (COMMA parametro)*
-    ;
-
-parametro 
-    : tipo ID
-    ;
-
-llamadaFuncion 
-    : ID LPAREN argumentos? RPAREN
-    ;
-
-argumentos 
-    : expresion (COMMA expresion)*
-    ;
-
-forLoop 
-    : FOR LPAREN asignacion SEMICOL expresion SEMICOL asignacion RPAREN LBRACE bloque RBRACE
-    ;
-
-whileLoop 
-    : WHILE LPAREN expresion RPAREN LBRACE bloque RBRACE
-    ;
-
-ifElse 
-    : IF LPAREN expresion RPAREN LBRACE bloque RBRACE (ELSE LBRACE bloque RBRACE)?
-    ;
-
-bloque 
-    : (instruccion SEMICOL)*
-    ;
+operacion : ID ASIGNAR expresion SUMA expresion;
 
 expresion
-    : LPAREN expresion RPAREN
-    | expresion MUL expresion
+    : PARI expresion PARD
+    | expresion MULT expresion  
     | expresion DIV expresion
-    | expresion MOD expresion
-    | expresion ADD expresion
-    | expresion SUB expresion
-    | expresion LT expresion
-    | expresion GT expresion
-    | expresion LEQ expresion
-    | expresion GEQ expresion
-    | expresion EQ expresion
-    | expresion NEQ expresion
-    | llamadaFuncion
+    | expresion MOD expresion 
+    | expresion SUMA expresion     
+    | expresion RESTA expresion                     
     | ID
-    | NUM
-    | TRUE
-    | FALSE
-    | STRING
-    ;
+    | NUMERO;
+
+bloque : (asignacion PYC | operacion PYC | cicloPara | cicloMientras | condicional | accion PYC)*;
+>>>>>>> main
