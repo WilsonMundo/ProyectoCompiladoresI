@@ -1,0 +1,43 @@
+# Duplicar un número sumándolo dos veces
+int dobleViaSuma(int x) {
+    int sum = 0;
+    int i = 0;
+    for (i = 0; i < 2; i = i + 1) {   # ← bucle fijo de 2 iteraciones
+        sum = sum + x;                    # ← acumulación redundante
+    };
+    return sum;
+};
+
+# Suma de los primeros n números naturales 1 + 2 + ... + n
+int sumatoria(int n) {
+    int acc = 0;
+    int i =1;
+    for (i = 1; i <= n; i = i + 1) {  # ← bucle que puede reemplazarse
+        acc = acc + i;                    #    por n*(n+1)/2
+    };
+    return acc;
+};
+
+# Detectar paridad restando 2 sucesivamente
+bool esPar(int n) {
+    int d = 0;
+    while (d > 1) {                       # ← bucle lineal
+        d = n - 2;
+    };
+    return n == 0;                        # ← comparación al final
+};
+
+# --------------- Programa principal -----------------------
+
+MiPrograma {
+    int num = 7;
+
+    int doble = dobleViaSuma(num);
+    mostrar("doble:", doble);             # esperado 14
+
+    int suma10 = sumatoria(10);
+    mostrar("sumatoria 1..10:", suma10);  # esperado 55
+
+    bool par = esPar(num);
+    mostrar("¿es par?:", par);            # esperado false
+}

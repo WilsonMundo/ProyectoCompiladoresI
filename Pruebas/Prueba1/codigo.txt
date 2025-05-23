@@ -1,0 +1,28 @@
+int suma(int x, int y) {
+    return x + y;
+};
+
+string concat(string a, string b) {
+    return a + b;
+};
+
+bool esPar(int n) {
+    if (n % 2 == 0) {
+        return true;
+    } else {
+        return false;6
+    };
+};
+MiPrograma {
+    int n = 5;
+    int m = 7;
+
+    int r = suma(n, m);
+    mostrar("La suma de", n, "y", m, "es", r);
+
+    string msj = concat("Hola ", "mundo");
+    mostrar(msj);
+
+    bool par = esPar(r);
+    mostrar("¿La suma es par?", par);
+}

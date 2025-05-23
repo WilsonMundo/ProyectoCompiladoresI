@@ -1,3 +1,4 @@
 # Ignorar archivos de cache 
 __pycache__/
 AnalizadorOLd.g4
+pruebas/**/*.exe
