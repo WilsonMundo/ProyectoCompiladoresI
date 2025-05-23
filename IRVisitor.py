@@ -1,13 +1,26 @@
 from llvmlite import ir
+import llvmlite.binding as llvm
 from parser.analizadorVisitor import analizadorVisitor
 
 class IRVisitor(analizadorVisitor):
     def __init__(self):
+        llvm.initialize()
+        llvm.initialize_native_target()
+        llvm.initialize_native_asmprinter()
         self.module = ir.Module(name="main")
+        self.module.triple = llvm.get_default_triple()
+        self.target_machine = llvm.Target.from_default_triple().create_target_machine()
+        self.module.data_layout = self.target_machine.target_data
+
         self.printf = ir.Function(
             self.module,
             ir.FunctionType(ir.IntType(32), [ir.PointerType(ir.IntType(8))], var_arg=True),
             name="printf"
+        )
+        self.sprintf = ir.Function(
+            self.module,
+            ir.FunctionType(ir.IntType(32), [ir.PointerType(ir.IntType(8))] * 2, var_arg=True),
+            name="sprintf"
         )
         self.funciones = {}
         self.builder = None
@@ -71,7 +84,8 @@ class IRVisitor(analizadorVisitor):
             return ir.Constant(ir.DoubleType() if '.' in num else ir.IntType(32), float(num) if '.' in num else int(num))
         
         elif ctx.STRING():
-            return self._strfmt(ctx.STRING().getText()[1:-1] + '\00')
+            raw = ctx.STRING().getText()[1:-1]
+            return self._str(raw)
 
         elif ctx.TRUE():
             return ir.Constant(ir.IntType(1), 1)
@@ -121,17 +135,36 @@ class IRVisitor(analizadorVisitor):
 
     def visitAccion(self, ctx):
         args = []
+        format_parts = []
+
         for i in range(ctx.getChildCount()):
             child = ctx.getChild(i)
             if child.getText() in ["mostrar", "(", ")", ","]:
                 continue
-            val = self.visit(child)
-            if val:
-                args.append(val)
 
-        for val in args:
-            fmt = self._strfmt("%f\n" if isinstance(val.type, ir.DoubleType) else "%d\n")
-            self.builder.call(self.printf, [fmt, val])
+            val = self.visit(child)
+            if not val:
+                continue
+
+            if isinstance(val.type, ir.PointerType):  # string
+                format_parts.append("%s")
+            elif isinstance(val.type, ir.DoubleType):
+                format_parts.append("%f")
+            elif isinstance(val.type, ir.IntType):
+                format_parts.append("%d")
+            else:
+                print(f"⚠️ Tipo no soportado: {val.type}")
+                continue
+
+            args.append(val)
+
+        if args:
+            fmt_str = " ".join(format_parts)
+            fmt = self._strfmt(fmt_str)
+            self.builder.call(self.printf, [fmt] + args)
+
+
+
 
     def visitIfElse(self, ctx):
         cond = self.visit(ctx.expresion())
@@ -286,16 +319,60 @@ class IRVisitor(analizadorVisitor):
         if tipo == "bool": return ir.IntType(1)
         if tipo == "string": return ir.PointerType(ir.IntType(8))
 
-    def _strfmt(self, formato):
-        const = ir.Constant(ir.ArrayType(ir.IntType(8), len(formato)), bytearray(formato.encode("utf8")))
-        var = ir.GlobalVariable(self.module, const.type, name=f".str{len(self.module.globals)}")
-        var.linkage = "internal"
+    def _str(self, text: str):
+        """Literal normal: sólo añade terminador nulo."""
+        if not text.endswith("\0"):
+            text += "\0"
+        encoded = bytearray(text.encode("utf8"))
+        const = ir.Constant(ir.ArrayType(ir.IntType(8), len(encoded)), encoded)
+        var   = ir.GlobalVariable(self.module, const.type,
+                                name=f".str{len(self.module.globals)}")
+        var.linkage         = "internal"
         var.global_constant = True
-        var.initializer = const
+        var.initializer     = const
         return self.builder.bitcast(var, ir.PointerType(ir.IntType(8)))
 
+    def _strfmt(self, fmt: str):
+        """Cadenas **de formato** para printf: añade '\n' y luego terminador."""
+        if not fmt.endswith("\n"):
+            fmt += "\n"
+        return self._str(fmt)        # _str ya agrega el '\0'
+
+
+
+
+    def _concat_strings(self, left, right):
+        # Crea una variable global para almacenar el resultado (128 bytes)
+        buffer_type = ir.ArrayType(ir.IntType(8), 128)
+        name = f"concat_str{len(self.module.globals)}"
+        global_buffer = ir.GlobalVariable(self.module, buffer_type, name=name)
+        global_buffer.linkage = "internal"
+        global_buffer.global_constant = False
+        global_buffer.initializer = ir.Constant(buffer_type, bytearray(128))
+
+        # Obtener puntero a la cadena global
+        buffer_ptr = self.builder.bitcast(global_buffer, ir.PointerType(ir.IntType(8)))
+
+        # Formato "%s%s"
+        fmt = self._strfmt("%s%s")
+
+        # sprintf(buffer_ptr, "%s%s", left, right)
+        self.builder.call(self.sprintf, [buffer_ptr, fmt, left, right])
+
+        return buffer_ptr
+
+    
     def _emit_op(self, op, left, right):
-        # Promoción automática: si uno es float, convertir el otro
+        # Concatenación de strings (ambos punteros i8*)
+        if op == '+' and isinstance(left.type, ir.PointerType) and isinstance(right.type, ir.PointerType):
+            return self._concat_strings(left, right)
+
+        # ❌ Prohibir otras operaciones con strings
+        if isinstance(left.type, ir.PointerType) or isinstance(right.type, ir.PointerType):
+            print(f"❌ Error: Operación '{op}' no permitida sobre strings.")
+            return None
+
+        # Promoción automática entre int y float
         if left.type != right.type:
             if isinstance(left.type, ir.IntType) and isinstance(right.type, ir.DoubleType):
                 left = self.builder.sitofp(left, ir.DoubleType())
@@ -316,13 +393,17 @@ class IRVisitor(analizadorVisitor):
         elif op == '%':
             return self.builder.frem(left, right) if left.type == ir.DoubleType() else self.builder.srem(left, right)
         elif op in ('<', '>', '<=', '>=', '==', '!='):
-            if left.type == ir.IntType(32):
+            if isinstance(left.type, ir.IntType):
                 return self.builder.icmp_signed(op, left, right)
-            else:
+            elif isinstance(left.type, ir.DoubleType):
                 return self.builder.fcmp_ordered(op, left, right)
+            else:
+                print(f"❌ Error: Comparación no soportada para tipo {left.type}")
+                return None
 
         print(f"❌ Operador '{op}' no soportado.")
         return None
+
     def _convert_type(self, valor, tipo_destino):
         if valor.type == tipo_destino:
             return valor

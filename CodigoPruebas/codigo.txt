@@ -87,7 +87,7 @@ MiPrograma {
     if (menorEdad == false) {
         mostrar(nombre, " no es menor de edad.");
     };
-    
+
     bool comparacion = x > 5;
     if (comparacion) {
         mostrar("x es mayor que 5");
@@ -103,11 +103,10 @@ MiPrograma {
 
     string saludoPersonal = saludar(nombre);
     mostrar("Saludo personalizado:", saludoPersonal);
+
     bool esAdulto = esMayor(20);
     if (esAdulto) {
         mostrar(nombre, " es adulto.");
-        
     };
-    
 }
 

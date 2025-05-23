@@ -1,0 +1,18 @@
+int x = 10;
+int x = 20;  #  Error: Variable redeclarada
+
+y = 5;       #  Error: Variable no declarada
+
+int sumar(int a, int b) {
+    int resultado = a + b;
+    return resultado;
+};
+
+
+int sumar(int a, int b) {  #  Error: Función ya fue declarada
+    return a + b;
+};
+
+int total = sumar(1);  #  Error: Número incorrecto de argumentos
+
+int resultado = restar(4, 2);  #  Error: Función no declarada

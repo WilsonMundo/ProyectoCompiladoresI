@@ -1,0 +1,117 @@
+
+int sumar(int a, int b) {
+    int resultado = a + b;
+    return resultado;
+};
+
+float dividir(float a, float b) {
+    float resultado = a / b;
+    return resultado;
+};
+
+string saludar(string nombre) {
+    string mensaje = "Hola ";
+    return mensaje + nombre;
+};
+
+bool esMayor(int edad) {
+    bool resultado = edad >= 18;
+    return resultado;
+    
+};
+
+MiPrograma {
+    int x = 10;
+    int y = 20;
+    
+
+    if (x < y) {
+        mostrar("Hola, bienvenido!");
+    } else {
+        mostrar("Adiós, hasta luego!");
+    };
+
+    int sumaTotal = 0;
+    int i = 1;
+    for (i = 1; i <= 5; i = i + 1) {
+        sumaTotal = sumaTotal + i;
+    };
+    mostrar("La suma total del for es :", sumaTotal);
+
+    int contador = 0;
+    while (contador < 3) {
+        mostrar("Ciclo while en ejecución...");
+        contador = contador + 1;
+    };
+
+    int num = 5;
+    int b = 15;
+    string an = "hola pru@eba compil'''ado@r";
+    int c = 20;
+
+    int suma = num + b;
+    mostrar("suma zz:", suma);
+
+    mostrar(an);
+
+    int resta = c - num;
+    mostrar("resta:", resta);
+
+    int multiplicacion = num * b;
+    mostrar("Multiplicación:", multiplicacion);
+
+    float division = c / num;
+    mostrar("División:", division);
+
+    if (c != b) {
+        mostrar("c es diferente de b");
+    };
+
+    if (b >= num) {
+        mostrar("b es mayor o igual que num");
+    };
+
+    float resultadoFinal = (suma + resta) * (multiplicacion - division);
+    mostrar("Resultado final:", resultadoFinal);
+
+    string nombre = "Sofia";
+    string saludo = "¡Hola ";
+    string despedida = "Adiós ";
+
+    mostrar(saludo, nombre, "!");  
+    mostrar(despedida, nombre, "!");    
+
+    bool mayorEdad = true;
+    bool menorEdad = false;
+
+    if (mayorEdad) {
+        mostrar(nombre, " es mayor de edad.");
+    };
+
+    if (menorEdad == false) {
+        mostrar(nombre, " no es menor de edad.");
+    };
+    
+    bool comparacion = x > 5;
+    if (comparacion) {
+        mostrar("x es mayor que 5");
+    };
+
+    # --- PRUEBAS DE FUNCIONES ---
+
+    int total = sumar(5, 15);
+    mostrar("Resultado de sumar:", total);
+
+    float divReal = dividir(10.0, 4.0);
+    mostrar("Resultado de dividir:", divReal);
+
+    string saludoPersonal = saludar(nombre);
+    mostrar("Saludo personalizado:", saludoPersonal);
+    bool esAdulto = esMayor(20);
+    if (esAdulto) {
+        mostrar(nombre, " es adulto.");
+        
+    };
+    
+}
+

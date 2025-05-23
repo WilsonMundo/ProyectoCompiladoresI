@@ -5,9 +5,9 @@ from EvalVisitor import EvalVisitor
 from ValidaErrorListener import ValidaErrorListener
 from SemanticoListener import SemanticoListener 
 from IRVisitor import IRVisitor
-import os
 
 def leer_archivo(nombre_archivo):
+    """Lee el contenido de un archivo y lo devuelve como una cadena."""
     try:
         with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
             return archivo.read()
@@ -15,25 +15,24 @@ def leer_archivo(nombre_archivo):
         print(f"❌ Error: No se encontró el archivo '{nombre_archivo}'.")
         return None
 
-def analizar_codigo(codigo, nombre_archivo="codigo.txt"):
+def analizar_codigo(codigo):
+    """Analiza el código fuente usando el analizador léxico y sintáctico."""
     if codigo is None:
         print("❌ Error: No hay código para analizar.")
         return
-    nombre_base = os.path.splitext(os.path.basename(nombre_archivo))[0]
-    nombre_ll = f"{nombre_base}.ll"
 
     input_stream = InputStream(codigo)
     lexer = analizadorLexer(input_stream)
     token_stream = CommonTokenStream(lexer)
     parser = analizadorParser(token_stream)
-
     listener = ValidaErrorListener()
     parser.removeErrorListeners()
     parser.addErrorListener(listener)
-
     tree = parser.programa()
 
-    semantic_listener = SemanticoListener()
+    
+    semantic_listener = SemanticoListener()    
+    
     walker = ParseTreeWalker()
     walker.walk(semantic_listener, tree)
 
@@ -41,16 +40,30 @@ def analizar_codigo(codigo, nombre_archivo="codigo.txt"):
         semantic_listener.mostrarErrores()
         print("⛔ Se detuvo la ejecución por errores semánticos.")
         return
-
+    
     if listener.hayErrores:
-        print("⛔ Se detuvo la ejecución por errores de sintaxis.")
-        return
-
-    visitor = EvalVisitor()
+          print("⛔ Se detuvo la ejecución por errores de sintaxis.")
+          return
+    visitor = EvalVisitor()    
     visitor.visit(tree)
-
+    #genera Salida.ll
     ir_gen = IRVisitor()
     ir_gen.visit(tree)
 
-    with open(nombre_ll, "w") as f:
+    with open("Ordenamiento.ll", "w") as f:
         f.write(str(ir_gen.module))
+    
+    
+    # print("\nResultado de las variables:")
+    # for var_name, value in visitor.variables.items():
+    #     print(f"{var_name} = {value}")
+    
+if __name__ == "__main__":
+    archivo_codigo = "codigo.txt" 
+    #print(f"Leyendo código desde '{archivo_codigo}'...\n")
+    
+    codigo = leer_archivo(archivo_codigo)
+    
+    #print("Ejecutando código...\n")
+    analizar_codigo(codigo)
+    

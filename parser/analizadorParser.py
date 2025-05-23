@@ -10,89 +10,87 @@ else:
 
 def serializedATN():
     return [
-        4,1,35,238,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,35,232,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,1,0,1,0,1,0,5,0,40,8,0,10,
         0,12,0,43,9,0,1,0,1,0,1,0,1,0,1,0,5,0,50,8,0,10,0,12,0,53,9,0,1,
         0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,67,8,1,1,2,1,2,
         1,2,1,2,3,2,73,8,2,1,3,1,3,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,
-        5,1,6,1,6,1,6,1,6,3,6,91,8,6,1,6,1,6,1,6,3,6,96,8,6,5,6,98,8,6,10,
-        6,12,6,101,9,6,1,6,1,6,1,7,1,7,1,7,1,8,1,8,1,8,1,8,3,8,112,8,8,1,
-        8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,5,9,122,8,9,10,9,12,9,125,9,9,1,10,
-        1,10,1,10,1,11,1,11,1,11,3,11,133,8,11,1,11,1,11,1,12,1,12,1,12,
-        5,12,140,8,12,10,12,12,12,143,9,12,1,13,1,13,1,13,1,13,1,13,1,13,
-        1,13,1,13,1,13,1,13,1,13,1,13,1,14,1,14,1,14,1,14,1,14,1,14,1,14,
-        1,14,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,
-        3,15,177,8,15,1,16,1,16,1,16,5,16,182,8,16,10,16,12,16,185,9,16,
-        1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,3,17,198,
-        8,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,
+        5,1,6,1,6,1,6,1,6,1,6,5,6,92,8,6,10,6,12,6,95,9,6,1,6,1,6,1,7,1,
+        7,1,7,1,8,1,8,1,8,1,8,3,8,106,8,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,
+        9,5,9,116,8,9,10,9,12,9,119,9,9,1,10,1,10,1,10,1,11,1,11,1,11,3,
+        11,127,8,11,1,11,1,11,1,12,1,12,1,12,5,12,134,8,12,10,12,12,12,137,
+        9,12,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,
+        1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,15,1,15,1,15,1,15,1,15,
+        1,15,1,15,1,15,1,15,1,15,1,15,1,15,3,15,171,8,15,1,16,1,16,1,16,
+        5,16,176,8,16,10,16,12,16,179,9,16,1,17,1,17,1,17,1,17,1,17,1,17,
+        1,17,1,17,1,17,1,17,1,17,3,17,192,8,17,1,17,1,17,1,17,1,17,1,17,
         1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,
-        1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,5,17,233,8,17,10,17,12,17,
-        236,9,17,1,17,0,1,34,18,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,
-        30,32,34,0,1,1,0,7,10,256,0,41,1,0,0,0,2,66,1,0,0,0,4,68,1,0,0,0,
-        6,74,1,0,0,0,8,76,1,0,0,0,10,80,1,0,0,0,12,86,1,0,0,0,14,104,1,0,
-        0,0,16,107,1,0,0,0,18,118,1,0,0,0,20,126,1,0,0,0,22,129,1,0,0,0,
-        24,136,1,0,0,0,26,144,1,0,0,0,28,156,1,0,0,0,30,164,1,0,0,0,32,183,
-        1,0,0,0,34,197,1,0,0,0,36,37,3,16,8,0,37,38,5,13,0,0,38,40,1,0,0,
-        0,39,36,1,0,0,0,40,43,1,0,0,0,41,39,1,0,0,0,41,42,1,0,0,0,42,44,
-        1,0,0,0,43,41,1,0,0,0,44,45,5,32,0,0,45,51,5,16,0,0,46,47,3,2,1,
-        0,47,48,5,13,0,0,48,50,1,0,0,0,49,46,1,0,0,0,50,53,1,0,0,0,51,49,
-        1,0,0,0,51,52,1,0,0,0,52,54,1,0,0,0,53,51,1,0,0,0,54,55,5,17,0,0,
-        55,56,5,0,0,1,56,1,1,0,0,0,57,67,3,4,2,0,58,67,3,8,4,0,59,67,3,10,
-        5,0,60,67,3,12,6,0,61,67,3,14,7,0,62,67,3,26,13,0,63,67,3,28,14,
-        0,64,67,3,30,15,0,65,67,3,16,8,0,66,57,1,0,0,0,66,58,1,0,0,0,66,
-        59,1,0,0,0,66,60,1,0,0,0,66,61,1,0,0,0,66,62,1,0,0,0,66,63,1,0,0,
-        0,66,64,1,0,0,0,66,65,1,0,0,0,67,3,1,0,0,0,68,69,3,6,3,0,69,72,5,
-        32,0,0,70,71,5,18,0,0,71,73,3,34,17,0,72,70,1,0,0,0,72,73,1,0,0,
-        0,73,5,1,0,0,0,74,75,7,0,0,0,75,7,1,0,0,0,76,77,5,32,0,0,77,78,5,
-        18,0,0,78,79,3,34,17,0,79,9,1,0,0,0,80,81,5,32,0,0,81,82,5,18,0,
-        0,82,83,3,34,17,0,83,84,5,23,0,0,84,85,3,34,17,0,85,11,1,0,0,0,86,
-        87,5,5,0,0,87,90,5,14,0,0,88,91,5,33,0,0,89,91,3,34,17,0,90,88,1,
-        0,0,0,90,89,1,0,0,0,91,99,1,0,0,0,92,95,5,19,0,0,93,96,5,33,0,0,
-        94,96,3,34,17,0,95,93,1,0,0,0,95,94,1,0,0,0,96,98,1,0,0,0,97,92,
-        1,0,0,0,98,101,1,0,0,0,99,97,1,0,0,0,99,100,1,0,0,0,100,102,1,0,
-        0,0,101,99,1,0,0,0,102,103,5,15,0,0,103,13,1,0,0,0,104,105,5,6,0,
-        0,105,106,3,34,17,0,106,15,1,0,0,0,107,108,3,6,3,0,108,109,5,32,
-        0,0,109,111,5,14,0,0,110,112,3,18,9,0,111,110,1,0,0,0,111,112,1,
-        0,0,0,112,113,1,0,0,0,113,114,5,15,0,0,114,115,5,16,0,0,115,116,
-        3,32,16,0,116,117,5,17,0,0,117,17,1,0,0,0,118,123,3,20,10,0,119,
-        120,5,19,0,0,120,122,3,20,10,0,121,119,1,0,0,0,122,125,1,0,0,0,123,
-        121,1,0,0,0,123,124,1,0,0,0,124,19,1,0,0,0,125,123,1,0,0,0,126,127,
-        3,6,3,0,127,128,5,32,0,0,128,21,1,0,0,0,129,130,5,32,0,0,130,132,
-        5,14,0,0,131,133,3,24,12,0,132,131,1,0,0,0,132,133,1,0,0,0,133,134,
-        1,0,0,0,134,135,5,15,0,0,135,23,1,0,0,0,136,141,3,34,17,0,137,138,
-        5,19,0,0,138,140,3,34,17,0,139,137,1,0,0,0,140,143,1,0,0,0,141,139,
-        1,0,0,0,141,142,1,0,0,0,142,25,1,0,0,0,143,141,1,0,0,0,144,145,5,
-        1,0,0,145,146,5,14,0,0,146,147,3,8,4,0,147,148,5,13,0,0,148,149,
-        3,34,17,0,149,150,5,13,0,0,150,151,3,8,4,0,151,152,5,15,0,0,152,
-        153,5,16,0,0,153,154,3,32,16,0,154,155,5,17,0,0,155,27,1,0,0,0,156,
-        157,5,2,0,0,157,158,5,14,0,0,158,159,3,34,17,0,159,160,5,15,0,0,
-        160,161,5,16,0,0,161,162,3,32,16,0,162,163,5,17,0,0,163,29,1,0,0,
-        0,164,165,5,3,0,0,165,166,5,14,0,0,166,167,3,34,17,0,167,168,5,15,
-        0,0,168,169,5,16,0,0,169,170,3,32,16,0,170,176,5,17,0,0,171,172,
-        5,4,0,0,172,173,5,16,0,0,173,174,3,32,16,0,174,175,5,17,0,0,175,
-        177,1,0,0,0,176,171,1,0,0,0,176,177,1,0,0,0,177,31,1,0,0,0,178,179,
-        3,2,1,0,179,180,5,13,0,0,180,182,1,0,0,0,181,178,1,0,0,0,182,185,
-        1,0,0,0,183,181,1,0,0,0,183,184,1,0,0,0,184,33,1,0,0,0,185,183,1,
-        0,0,0,186,187,6,17,-1,0,187,188,5,14,0,0,188,189,3,34,17,0,189,190,
-        5,15,0,0,190,198,1,0,0,0,191,198,3,22,11,0,192,198,5,32,0,0,193,
-        198,5,31,0,0,194,198,5,11,0,0,195,198,5,12,0,0,196,198,5,33,0,0,
-        197,186,1,0,0,0,197,191,1,0,0,0,197,192,1,0,0,0,197,193,1,0,0,0,
-        197,194,1,0,0,0,197,195,1,0,0,0,197,196,1,0,0,0,198,234,1,0,0,0,
-        199,200,10,17,0,0,200,201,5,20,0,0,201,233,3,34,17,18,202,203,10,
-        16,0,0,203,204,5,21,0,0,204,233,3,34,17,17,205,206,10,15,0,0,206,
-        207,5,22,0,0,207,233,3,34,17,16,208,209,10,14,0,0,209,210,5,23,0,
-        0,210,233,3,34,17,15,211,212,10,13,0,0,212,213,5,24,0,0,213,233,
-        3,34,17,14,214,215,10,12,0,0,215,216,5,25,0,0,216,233,3,34,17,13,
-        217,218,10,11,0,0,218,219,5,26,0,0,219,233,3,34,17,12,220,221,10,
-        10,0,0,221,222,5,27,0,0,222,233,3,34,17,11,223,224,10,9,0,0,224,
-        225,5,28,0,0,225,233,3,34,17,10,226,227,10,8,0,0,227,228,5,29,0,
-        0,228,233,3,34,17,9,229,230,10,7,0,0,230,231,5,30,0,0,231,233,3,
-        34,17,8,232,199,1,0,0,0,232,202,1,0,0,0,232,205,1,0,0,0,232,208,
-        1,0,0,0,232,211,1,0,0,0,232,214,1,0,0,0,232,217,1,0,0,0,232,220,
-        1,0,0,0,232,223,1,0,0,0,232,226,1,0,0,0,232,229,1,0,0,0,233,236,
-        1,0,0,0,234,232,1,0,0,0,234,235,1,0,0,0,235,35,1,0,0,0,236,234,1,
-        0,0,0,16,41,51,66,72,90,95,99,111,123,132,141,176,183,197,232,234
+        1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,
+        1,17,1,17,5,17,227,8,17,10,17,12,17,230,9,17,1,17,0,1,34,18,0,2,
+        4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,0,1,1,0,7,10,248,0,
+        41,1,0,0,0,2,66,1,0,0,0,4,68,1,0,0,0,6,74,1,0,0,0,8,76,1,0,0,0,10,
+        80,1,0,0,0,12,86,1,0,0,0,14,98,1,0,0,0,16,101,1,0,0,0,18,112,1,0,
+        0,0,20,120,1,0,0,0,22,123,1,0,0,0,24,130,1,0,0,0,26,138,1,0,0,0,
+        28,150,1,0,0,0,30,158,1,0,0,0,32,177,1,0,0,0,34,191,1,0,0,0,36,37,
+        3,16,8,0,37,38,5,13,0,0,38,40,1,0,0,0,39,36,1,0,0,0,40,43,1,0,0,
+        0,41,39,1,0,0,0,41,42,1,0,0,0,42,44,1,0,0,0,43,41,1,0,0,0,44,45,
+        5,32,0,0,45,51,5,16,0,0,46,47,3,2,1,0,47,48,5,13,0,0,48,50,1,0,0,
+        0,49,46,1,0,0,0,50,53,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,52,54,
+        1,0,0,0,53,51,1,0,0,0,54,55,5,17,0,0,55,56,5,0,0,1,56,1,1,0,0,0,
+        57,67,3,4,2,0,58,67,3,8,4,0,59,67,3,10,5,0,60,67,3,12,6,0,61,67,
+        3,14,7,0,62,67,3,26,13,0,63,67,3,28,14,0,64,67,3,30,15,0,65,67,3,
+        16,8,0,66,57,1,0,0,0,66,58,1,0,0,0,66,59,1,0,0,0,66,60,1,0,0,0,66,
+        61,1,0,0,0,66,62,1,0,0,0,66,63,1,0,0,0,66,64,1,0,0,0,66,65,1,0,0,
+        0,67,3,1,0,0,0,68,69,3,6,3,0,69,72,5,32,0,0,70,71,5,18,0,0,71,73,
+        3,34,17,0,72,70,1,0,0,0,72,73,1,0,0,0,73,5,1,0,0,0,74,75,7,0,0,0,
+        75,7,1,0,0,0,76,77,5,32,0,0,77,78,5,18,0,0,78,79,3,34,17,0,79,9,
+        1,0,0,0,80,81,5,32,0,0,81,82,5,18,0,0,82,83,3,34,17,0,83,84,5,23,
+        0,0,84,85,3,34,17,0,85,11,1,0,0,0,86,87,5,5,0,0,87,88,5,14,0,0,88,
+        93,3,34,17,0,89,90,5,19,0,0,90,92,3,34,17,0,91,89,1,0,0,0,92,95,
+        1,0,0,0,93,91,1,0,0,0,93,94,1,0,0,0,94,96,1,0,0,0,95,93,1,0,0,0,
+        96,97,5,15,0,0,97,13,1,0,0,0,98,99,5,6,0,0,99,100,3,34,17,0,100,
+        15,1,0,0,0,101,102,3,6,3,0,102,103,5,32,0,0,103,105,5,14,0,0,104,
+        106,3,18,9,0,105,104,1,0,0,0,105,106,1,0,0,0,106,107,1,0,0,0,107,
+        108,5,15,0,0,108,109,5,16,0,0,109,110,3,32,16,0,110,111,5,17,0,0,
+        111,17,1,0,0,0,112,117,3,20,10,0,113,114,5,19,0,0,114,116,3,20,10,
+        0,115,113,1,0,0,0,116,119,1,0,0,0,117,115,1,0,0,0,117,118,1,0,0,
+        0,118,19,1,0,0,0,119,117,1,0,0,0,120,121,3,6,3,0,121,122,5,32,0,
+        0,122,21,1,0,0,0,123,124,5,32,0,0,124,126,5,14,0,0,125,127,3,24,
+        12,0,126,125,1,0,0,0,126,127,1,0,0,0,127,128,1,0,0,0,128,129,5,15,
+        0,0,129,23,1,0,0,0,130,135,3,34,17,0,131,132,5,19,0,0,132,134,3,
+        34,17,0,133,131,1,0,0,0,134,137,1,0,0,0,135,133,1,0,0,0,135,136,
+        1,0,0,0,136,25,1,0,0,0,137,135,1,0,0,0,138,139,5,1,0,0,139,140,5,
+        14,0,0,140,141,3,8,4,0,141,142,5,13,0,0,142,143,3,34,17,0,143,144,
+        5,13,0,0,144,145,3,8,4,0,145,146,5,15,0,0,146,147,5,16,0,0,147,148,
+        3,32,16,0,148,149,5,17,0,0,149,27,1,0,0,0,150,151,5,2,0,0,151,152,
+        5,14,0,0,152,153,3,34,17,0,153,154,5,15,0,0,154,155,5,16,0,0,155,
+        156,3,32,16,0,156,157,5,17,0,0,157,29,1,0,0,0,158,159,5,3,0,0,159,
+        160,5,14,0,0,160,161,3,34,17,0,161,162,5,15,0,0,162,163,5,16,0,0,
+        163,164,3,32,16,0,164,170,5,17,0,0,165,166,5,4,0,0,166,167,5,16,
+        0,0,167,168,3,32,16,0,168,169,5,17,0,0,169,171,1,0,0,0,170,165,1,
+        0,0,0,170,171,1,0,0,0,171,31,1,0,0,0,172,173,3,2,1,0,173,174,5,13,
+        0,0,174,176,1,0,0,0,175,172,1,0,0,0,176,179,1,0,0,0,177,175,1,0,
+        0,0,177,178,1,0,0,0,178,33,1,0,0,0,179,177,1,0,0,0,180,181,6,17,
+        -1,0,181,182,5,14,0,0,182,183,3,34,17,0,183,184,5,15,0,0,184,192,
+        1,0,0,0,185,192,3,22,11,0,186,192,5,32,0,0,187,192,5,31,0,0,188,
+        192,5,11,0,0,189,192,5,12,0,0,190,192,5,33,0,0,191,180,1,0,0,0,191,
+        185,1,0,0,0,191,186,1,0,0,0,191,187,1,0,0,0,191,188,1,0,0,0,191,
+        189,1,0,0,0,191,190,1,0,0,0,192,228,1,0,0,0,193,194,10,17,0,0,194,
+        195,5,20,0,0,195,227,3,34,17,18,196,197,10,16,0,0,197,198,5,21,0,
+        0,198,227,3,34,17,17,199,200,10,15,0,0,200,201,5,22,0,0,201,227,
+        3,34,17,16,202,203,10,14,0,0,203,204,5,23,0,0,204,227,3,34,17,15,
+        205,206,10,13,0,0,206,207,5,24,0,0,207,227,3,34,17,14,208,209,10,
+        12,0,0,209,210,5,25,0,0,210,227,3,34,17,13,211,212,10,11,0,0,212,
+        213,5,26,0,0,213,227,3,34,17,12,214,215,10,10,0,0,215,216,5,27,0,
+        0,216,227,3,34,17,11,217,218,10,9,0,0,218,219,5,28,0,0,219,227,3,
+        34,17,10,220,221,10,8,0,0,221,222,5,29,0,0,222,227,3,34,17,9,223,
+        224,10,7,0,0,224,225,5,30,0,0,225,227,3,34,17,8,226,193,1,0,0,0,
+        226,196,1,0,0,0,226,199,1,0,0,0,226,202,1,0,0,0,226,205,1,0,0,0,
+        226,208,1,0,0,0,226,211,1,0,0,0,226,214,1,0,0,0,226,217,1,0,0,0,
+        226,220,1,0,0,0,226,223,1,0,0,0,227,230,1,0,0,0,228,226,1,0,0,0,
+        228,229,1,0,0,0,229,35,1,0,0,0,230,228,1,0,0,0,14,41,51,66,72,93,
+        105,117,126,135,170,177,191,226,228
     ]
 
 class analizadorParser ( Parser ):
@@ -702,21 +700,15 @@ class analizadorParser ( Parser ):
         def LPAREN(self):
             return self.getToken(analizadorParser.LPAREN, 0)
 
-        def RPAREN(self):
-            return self.getToken(analizadorParser.RPAREN, 0)
-
-        def STRING(self, i:int=None):
-            if i is None:
-                return self.getTokens(analizadorParser.STRING)
-            else:
-                return self.getToken(analizadorParser.STRING, i)
-
         def expresion(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(analizadorParser.ExpresionContext)
             else:
                 return self.getTypedRuleContext(analizadorParser.ExpresionContext,i)
 
+
+        def RPAREN(self):
+            return self.getToken(analizadorParser.RPAREN, 0)
 
         def COMMA(self, i:int=None):
             if i is None:
@@ -755,45 +747,21 @@ class analizadorParser ( Parser ):
             self.match(analizadorParser.PRINT)
             self.state = 87
             self.match(analizadorParser.LPAREN)
-            self.state = 90
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
-            if la_ == 1:
-                self.state = 88
-                self.match(analizadorParser.STRING)
-                pass
-
-            elif la_ == 2:
-                self.state = 89
-                self.expresion(0)
-                pass
-
-
-            self.state = 99
+            self.state = 88
+            self.expresion(0)
+            self.state = 93
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==19:
-                self.state = 92
+                self.state = 89
                 self.match(analizadorParser.COMMA)
+                self.state = 90
+                self.expresion(0)
                 self.state = 95
-                self._errHandler.sync(self)
-                la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
-                if la_ == 1:
-                    self.state = 93
-                    self.match(analizadorParser.STRING)
-                    pass
-
-                elif la_ == 2:
-                    self.state = 94
-                    self.expresion(0)
-                    pass
-
-
-                self.state = 101
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 102
+            self.state = 96
             self.match(analizadorParser.RPAREN)
         except RecognitionException as re:
             localctx.exception = re
@@ -844,9 +812,9 @@ class analizadorParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_returnStmt)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 104
+            self.state = 98
             self.match(analizadorParser.RETURN)
-            self.state = 105
+            self.state = 99
             self.expresion(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -918,27 +886,27 @@ class analizadorParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 107
+            self.state = 101
             self.tipo()
-            self.state = 108
+            self.state = 102
             self.match(analizadorParser.ID)
-            self.state = 109
+            self.state = 103
             self.match(analizadorParser.LPAREN)
-            self.state = 111
+            self.state = 105
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 1920) != 0):
-                self.state = 110
+                self.state = 104
                 self.parametros()
 
 
-            self.state = 113
+            self.state = 107
             self.match(analizadorParser.RPAREN)
-            self.state = 114
+            self.state = 108
             self.match(analizadorParser.LBRACE)
-            self.state = 115
+            self.state = 109
             self.bloque()
-            self.state = 116
+            self.state = 110
             self.match(analizadorParser.RBRACE)
         except RecognitionException as re:
             localctx.exception = re
@@ -996,17 +964,17 @@ class analizadorParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 118
+            self.state = 112
             self.parametro()
-            self.state = 123
+            self.state = 117
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==19:
-                self.state = 119
+                self.state = 113
                 self.match(analizadorParser.COMMA)
-                self.state = 120
+                self.state = 114
                 self.parametro()
-                self.state = 125
+                self.state = 119
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1059,9 +1027,9 @@ class analizadorParser ( Parser ):
         self.enterRule(localctx, 20, self.RULE_parametro)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 126
+            self.state = 120
             self.tipo()
-            self.state = 127
+            self.state = 121
             self.match(analizadorParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -1119,19 +1087,19 @@ class analizadorParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 129
+            self.state = 123
             self.match(analizadorParser.ID)
-            self.state = 130
+            self.state = 124
             self.match(analizadorParser.LPAREN)
-            self.state = 132
+            self.state = 126
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 15032408064) != 0):
-                self.state = 131
+                self.state = 125
                 self.argumentos()
 
 
-            self.state = 134
+            self.state = 128
             self.match(analizadorParser.RPAREN)
         except RecognitionException as re:
             localctx.exception = re
@@ -1189,17 +1157,17 @@ class analizadorParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 136
+            self.state = 130
             self.expresion(0)
-            self.state = 141
+            self.state = 135
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==19:
-                self.state = 137
+                self.state = 131
                 self.match(analizadorParser.COMMA)
-                self.state = 138
+                self.state = 132
                 self.expresion(0)
-                self.state = 143
+                self.state = 137
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1281,27 +1249,27 @@ class analizadorParser ( Parser ):
         self.enterRule(localctx, 26, self.RULE_forLoop)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 144
+            self.state = 138
             self.match(analizadorParser.FOR)
-            self.state = 145
+            self.state = 139
             self.match(analizadorParser.LPAREN)
-            self.state = 146
+            self.state = 140
             self.asignacion()
-            self.state = 147
+            self.state = 141
             self.match(analizadorParser.SEMICOL)
-            self.state = 148
+            self.state = 142
             self.expresion(0)
-            self.state = 149
+            self.state = 143
             self.match(analizadorParser.SEMICOL)
-            self.state = 150
+            self.state = 144
             self.asignacion()
-            self.state = 151
+            self.state = 145
             self.match(analizadorParser.RPAREN)
-            self.state = 152
+            self.state = 146
             self.match(analizadorParser.LBRACE)
-            self.state = 153
+            self.state = 147
             self.bloque()
-            self.state = 154
+            self.state = 148
             self.match(analizadorParser.RBRACE)
         except RecognitionException as re:
             localctx.exception = re
@@ -1368,19 +1336,19 @@ class analizadorParser ( Parser ):
         self.enterRule(localctx, 28, self.RULE_whileLoop)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 156
+            self.state = 150
             self.match(analizadorParser.WHILE)
-            self.state = 157
+            self.state = 151
             self.match(analizadorParser.LPAREN)
-            self.state = 158
+            self.state = 152
             self.expresion(0)
-            self.state = 159
+            self.state = 153
             self.match(analizadorParser.RPAREN)
-            self.state = 160
+            self.state = 154
             self.match(analizadorParser.LBRACE)
-            self.state = 161
+            self.state = 155
             self.bloque()
-            self.state = 162
+            self.state = 156
             self.match(analizadorParser.RBRACE)
         except RecognitionException as re:
             localctx.exception = re
@@ -1460,31 +1428,31 @@ class analizadorParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 164
+            self.state = 158
             self.match(analizadorParser.IF)
-            self.state = 165
+            self.state = 159
             self.match(analizadorParser.LPAREN)
-            self.state = 166
+            self.state = 160
             self.expresion(0)
-            self.state = 167
+            self.state = 161
             self.match(analizadorParser.RPAREN)
-            self.state = 168
+            self.state = 162
             self.match(analizadorParser.LBRACE)
-            self.state = 169
+            self.state = 163
             self.bloque()
-            self.state = 170
+            self.state = 164
             self.match(analizadorParser.RBRACE)
-            self.state = 176
+            self.state = 170
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==4:
-                self.state = 171
+                self.state = 165
                 self.match(analizadorParser.ELSE)
-                self.state = 172
+                self.state = 166
                 self.match(analizadorParser.LBRACE)
-                self.state = 173
+                self.state = 167
                 self.bloque()
-                self.state = 174
+                self.state = 168
                 self.match(analizadorParser.RBRACE)
 
 
@@ -1544,15 +1512,15 @@ class analizadorParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 183
+            self.state = 177
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & 4294969326) != 0):
-                self.state = 178
+                self.state = 172
                 self.instruccion()
-                self.state = 179
+                self.state = 173
                 self.match(analizadorParser.SEMICOL)
-                self.state = 185
+                self.state = 179
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1665,208 +1633,208 @@ class analizadorParser ( Parser ):
         self.enterRecursionRule(localctx, 34, self.RULE_expresion, _p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 197
+            self.state = 191
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,11,self._ctx)
             if la_ == 1:
-                self.state = 187
+                self.state = 181
                 self.match(analizadorParser.LPAREN)
-                self.state = 188
+                self.state = 182
                 self.expresion(0)
-                self.state = 189
+                self.state = 183
                 self.match(analizadorParser.RPAREN)
                 pass
 
             elif la_ == 2:
-                self.state = 191
+                self.state = 185
                 self.llamadaFuncion()
                 pass
 
             elif la_ == 3:
-                self.state = 192
+                self.state = 186
                 self.match(analizadorParser.ID)
                 pass
 
             elif la_ == 4:
-                self.state = 193
+                self.state = 187
                 self.match(analizadorParser.NUM)
                 pass
 
             elif la_ == 5:
-                self.state = 194
+                self.state = 188
                 self.match(analizadorParser.TRUE)
                 pass
 
             elif la_ == 6:
-                self.state = 195
+                self.state = 189
                 self.match(analizadorParser.FALSE)
                 pass
 
             elif la_ == 7:
-                self.state = 196
+                self.state = 190
                 self.match(analizadorParser.STRING)
                 pass
 
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 234
+            self.state = 228
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,15,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,13,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 232
+                    self.state = 226
                     self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
+                    la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
                     if la_ == 1:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 199
+                        self.state = 193
                         if not self.precpred(self._ctx, 17):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 17)")
-                        self.state = 200
+                        self.state = 194
                         self.match(analizadorParser.MUL)
-                        self.state = 201
+                        self.state = 195
                         self.expresion(18)
                         pass
 
                     elif la_ == 2:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 202
+                        self.state = 196
                         if not self.precpred(self._ctx, 16):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 16)")
-                        self.state = 203
+                        self.state = 197
                         self.match(analizadorParser.DIV)
-                        self.state = 204
+                        self.state = 198
                         self.expresion(17)
                         pass
 
                     elif la_ == 3:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 205
+                        self.state = 199
                         if not self.precpred(self._ctx, 15):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 15)")
-                        self.state = 206
+                        self.state = 200
                         self.match(analizadorParser.MOD)
-                        self.state = 207
+                        self.state = 201
                         self.expresion(16)
                         pass
 
                     elif la_ == 4:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 208
+                        self.state = 202
                         if not self.precpred(self._ctx, 14):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 14)")
-                        self.state = 209
+                        self.state = 203
                         self.match(analizadorParser.ADD)
-                        self.state = 210
+                        self.state = 204
                         self.expresion(15)
                         pass
 
                     elif la_ == 5:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 211
+                        self.state = 205
                         if not self.precpred(self._ctx, 13):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 13)")
-                        self.state = 212
+                        self.state = 206
                         self.match(analizadorParser.SUB)
-                        self.state = 213
+                        self.state = 207
                         self.expresion(14)
                         pass
 
                     elif la_ == 6:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 214
+                        self.state = 208
                         if not self.precpred(self._ctx, 12):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 12)")
-                        self.state = 215
+                        self.state = 209
                         self.match(analizadorParser.LT)
-                        self.state = 216
+                        self.state = 210
                         self.expresion(13)
                         pass
 
                     elif la_ == 7:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 217
+                        self.state = 211
                         if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
-                        self.state = 218
+                        self.state = 212
                         self.match(analizadorParser.GT)
-                        self.state = 219
+                        self.state = 213
                         self.expresion(12)
                         pass
 
                     elif la_ == 8:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 220
+                        self.state = 214
                         if not self.precpred(self._ctx, 10):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
-                        self.state = 221
+                        self.state = 215
                         self.match(analizadorParser.LEQ)
-                        self.state = 222
+                        self.state = 216
                         self.expresion(11)
                         pass
 
                     elif la_ == 9:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 223
+                        self.state = 217
                         if not self.precpred(self._ctx, 9):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
-                        self.state = 224
+                        self.state = 218
                         self.match(analizadorParser.GEQ)
-                        self.state = 225
+                        self.state = 219
                         self.expresion(10)
                         pass
 
                     elif la_ == 10:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 226
+                        self.state = 220
                         if not self.precpred(self._ctx, 8):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 8)")
-                        self.state = 227
+                        self.state = 221
                         self.match(analizadorParser.EQ)
-                        self.state = 228
+                        self.state = 222
                         self.expresion(9)
                         pass
 
                     elif la_ == 11:
                         localctx = analizadorParser.ExpresionContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expresion)
-                        self.state = 229
+                        self.state = 223
                         if not self.precpred(self._ctx, 7):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
-                        self.state = 230
+                        self.state = 224
                         self.match(analizadorParser.NEQ)
-                        self.state = 231
+                        self.state = 225
                         self.expresion(8)
                         pass
 
              
-                self.state = 236
+                self.state = 230
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,15,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,13,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re

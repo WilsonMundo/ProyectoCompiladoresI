@@ -78,7 +78,7 @@ suma
     ;
 
 accion 
-    : PRINT LPAREN (STRING | expresion) (COMMA (STRING | expresion))* RPAREN
+    : PRINT LPAREN expresion (COMMA expresion)* RPAREN
     ;
 
 returnStmt 

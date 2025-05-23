@@ -1,12 +1,12 @@
 
 from parser.analizadorVisitor import analizadorVisitor
-
 class EvalVisitor(analizadorVisitor):
     def __init__(self):
         self.scopes = [{}]  # Variables globales o locales
         self.funciones = {}  # Funciones definidas
         self.hayErrores = False
         self.retorno = None
+
 
 
     def visitPrograma(self, ctx):
@@ -152,8 +152,8 @@ class EvalVisitor(analizadorVisitor):
                 self.hayErrores = True
                 self.scopes = scope_anterior
                 return None
-            self._insertar_variable(id_param, tipo, valor)
-
+            self._insertar_variable(id_param, tipo, valor) #pruebas
+           
         # ⛑️ Manejo seguro de retorno
         prev_retorno = self.retorno
         self.retorno = None
